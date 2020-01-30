@@ -1,0 +1,344 @@
+import os
+import sys
+import json
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+
+from WindowMain import WindowMain
+from WindowClassificationMain import WindowClassificationMain
+from WindowDetectionMain import WindowDetectionMain
+
+from WindowObj1GluoncvFinetune import WindowObj1GluoncvFinetune
+from WindowObj1GluoncvFinetuneDataParam import WindowObj1GluoncvFinetuneDataParam
+from WindowObj1GluoncvFinetuneModelParam import WindowObj1GluoncvFinetuneModelParam
+from WindowObj1GluoncvFinetuneHyperParam import WindowObj1GluoncvFinetuneHyperParam
+from WindowObj1GluoncvFinetuneTrain import WindowObj1GluoncvFinetuneTrain
+
+from WindowObj1GluoncvFinetuneInfer import WindowObj1GluoncvFinetuneInfer
+
+
+
+from WindowObj2PytorchFinetune import WindowObj2PytorchFinetune
+from WindowObj3Mxrcnn import WindowObj3Mxrcnn
+from WindowObj4Efficientdet import WindowObj4Efficientdet
+from WindowObj5PytorchRetinanet import WindowObj5PytorchRetinanet
+from WindowObj6CornernetLite import WindowObj6CornernetLite
+from WindowObj7Yolov3 import WindowObj7Yolov3
+
+
+
+class WindowMain(QtWidgets.QWidget):
+
+    forward_classification = QtCore.pyqtSignal();
+    forward_detection = QtCore.pyqtSignal();
+
+    def __init__(self):
+        super().__init__()
+        self.title = 'Monk'
+        self.left = 100
+        self.top = 100
+        self.width = 300
+        self.height = 200
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.left, self.top, self.width, self.height);
+
+        # Image classification
+        self.b1 = QPushButton('Image Classification', self)
+        self.b1.move(30,10)
+        self.b1.clicked.connect(self.image_classification);
+
+        # Object Detection
+        self.b1 = QPushButton('Object Detection', self)
+        self.b1.move(30,50)
+        self.b1.clicked.connect(self.object_detection);
+
+        # Exit
+        self.b3 = QPushButton('Quit', self)
+        self.b3.move(100,150)
+        self.b3.clicked.connect(self.close)
+
+
+    def image_classification(self):
+        self.forward_classification.emit();
+
+    def object_detection(self):
+        self.forward_detection.emit();
+
+
+
+
+
+
+
+
+
+
+
+class Controller:
+
+    def __init__(self):
+        self.windows = [];
+
+
+    def close_other_windows(self, window):
+        for i in range(len(self.windows)):
+            self.windows[i].close();
+        self.windows = [];
+        self.windows.append(window);
+
+
+    def show_main(self):
+        self.window_main = WindowMain();
+
+        #forwards
+        self.window_main.forward_classification.connect(self.show_classification_main); 
+        self.window_main.forward_detection.connect(self.show_detection_main);
+        
+        #close other 
+        self.close_other_windows(self.window_main);
+        
+        #show_current_window
+        self.window_main.show(); 
+
+
+    def show_classification_main(self):
+        self.window_classification_main = WindowClassificationMain();
+
+        #backward
+        self.window_classification_main.backward_main.connect(self.show_main);
+
+        #close other 
+        self.close_other_windows(self.window_classification_main);
+
+        #show_current_window
+        self.window_classification_main.show(); 
+
+
+    def show_detection_main(self):
+        self.window_detection_main = WindowDetectionMain();
+
+        #forwards
+        self.window_detection_main.forward_obj_1_gluoncv_finetune.connect(self.show_obj_1_gluoncv_finetune)
+        self.window_detection_main.forward_obj_2_pytorch_finetune.connect(self.show_obj_2_pytorch_finetune)
+        self.window_detection_main.forward_obj_3_mxrcnn.connect(self.show_obj_3_mxrcnn)
+        self.window_detection_main.forward_obj_4_efficientdet.connect(self.show_obj_4_efficientdet)
+        self.window_detection_main.forward_obj_5_pytorch_retinanet.connect(self.show_obj_5_pytorch_retinanet)
+        self.window_detection_main.forward_obj_6_cornernet_lite.connect(self.show_obj_6_cornernet_lite)
+        self.window_detection_main.forward_obj_7_yolov3.connect(self.show_obj_7_yolov3)
+
+        #backward
+        self.window_detection_main.backward_main.connect(self.show_main);
+
+        #close other 
+        self.close_other_windows(self.window_detection_main);
+
+        #show_current_window
+        self.window_detection_main.show(); 
+
+
+
+
+    # Object Detection Windows
+    def show_obj_1_gluoncv_finetune(self):
+        self.obj_1_gluoncv_finetune = WindowObj1GluoncvFinetune();
+
+        #forward
+        self.obj_1_gluoncv_finetune.forward_train.connect(self.show_obj_1_gluoncv_finetune_data_param)
+        self.obj_1_gluoncv_finetune.forward_infer.connect(self.show_obj_1_gluoncv_finetune_infer)
+
+        #backward
+        self.obj_1_gluoncv_finetune.backward_obj.connect(self.show_detection_main);
+
+        #close other 
+        self.close_other_windows(self.obj_1_gluoncv_finetune);
+
+        #show_current_window
+        self.obj_1_gluoncv_finetune.show();
+
+
+    def show_obj_1_gluoncv_finetune_data_param(self):
+        self.obj_1_gluoncv_finetune_data_param = WindowObj1GluoncvFinetuneDataParam();
+
+        #forward
+        self.obj_1_gluoncv_finetune_data_param.forward_model_param.connect(self.show_obj_1_gluoncv_finetune_model_param)
+
+        #backward
+        self.obj_1_gluoncv_finetune_data_param.backward_1_gluoncv_finetune.connect(self.show_obj_1_gluoncv_finetune);
+
+
+        #close other 
+        self.close_other_windows(self.obj_1_gluoncv_finetune_data_param);
+
+        #show_current_window
+        self.obj_1_gluoncv_finetune_data_param.show();
+
+
+    def show_obj_1_gluoncv_finetune_model_param(self):
+        self.obj_1_gluoncv_finetune_model_param = WindowObj1GluoncvFinetuneModelParam();
+
+        #forward
+        self.obj_1_gluoncv_finetune_model_param.forward_hyper_param.connect(self.show_obj_1_gluoncv_finetune_hyper_param);
+
+        #backward
+        self.obj_1_gluoncv_finetune_model_param.backward_1_gluoncv_finetune_data_param.connect(self.show_obj_1_gluoncv_finetune_data_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_1_gluoncv_finetune_model_param);
+
+        #show_current_window
+        self.obj_1_gluoncv_finetune_model_param.show();
+
+
+    def show_obj_1_gluoncv_finetune_hyper_param(self):
+        self.obj_1_gluoncv_finetune_hyper_param = WindowObj1GluoncvFinetuneHyperParam();
+
+        #forward
+        self.obj_1_gluoncv_finetune_hyper_param.forward_train.connect(self.show_obj_1_gluoncv_finetune_train)
+
+        #backward
+        self.obj_1_gluoncv_finetune_hyper_param.backward_model_model_param.connect(self.show_obj_1_gluoncv_finetune_model_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_1_gluoncv_finetune_hyper_param);
+
+        #show_current_window
+        self.obj_1_gluoncv_finetune_hyper_param.show();
+
+
+    def show_obj_1_gluoncv_finetune_train(self):
+        self.obj_1_gluoncv_finetune_train = WindowObj1GluoncvFinetuneTrain();
+
+        #forward
+        self.obj_1_gluoncv_finetune_train.forward_1_gluoncv_finetune.connect(self.show_obj_1_gluoncv_finetune)
+
+        #backward
+        self.obj_1_gluoncv_finetune_train.backward_hyper_param.connect(self.show_obj_1_gluoncv_finetune_hyper_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_1_gluoncv_finetune_train);
+
+        #show_current_window
+        self.obj_1_gluoncv_finetune_train.show();
+
+
+    
+
+
+    def show_obj_1_gluoncv_finetune_infer(self):
+        self.obj_1_gluoncv_finetune_infer = WindowObj1GluoncvFinetuneInfer();
+
+        #forward
+
+
+        #backward
+        self.obj_1_gluoncv_finetune_infer.backward_1_gluoncv_finetune.connect(self.show_obj_1_gluoncv_finetune);
+
+
+        #close other 
+        self.close_other_windows(self.obj_1_gluoncv_finetune_infer);
+
+        #show_current_window
+        self.obj_1_gluoncv_finetune_infer.show();
+
+
+
+
+
+    def show_obj_2_pytorch_finetune(self):
+        self.obj_2_pytorch_finetune = WindowObj2PytorchFinetune();
+
+        #backward
+        self.obj_2_pytorch_finetune.backward_main.connect(self.show_detection_main);
+
+        #close other 
+        self.close_other_windows(self.obj_2_pytorch_finetune);
+
+        #show_current_window
+        self.obj_2_pytorch_finetune.show();
+
+
+
+    def show_obj_3_mxrcnn(self):
+        self.obj_3_mxrcnn = WindowObj3Mxrcnn();
+
+        #backward
+        self.obj_3_mxrcnn.backward_main.connect(self.show_detection_main);
+
+        #close other 
+        self.close_other_windows(self.obj_3_mxrcnn);
+
+        #show_current_window
+        self.obj_3_mxrcnn.show();
+
+
+
+    def show_obj_4_efficientdet(self):
+        self.obj_4_efficientdet = WindowObj4Efficientdet();
+
+        #backward
+        self.obj_4_efficientdet.backward_main.connect(self.show_detection_main);
+
+        #close other 
+        self.close_other_windows(self.obj_4_efficientdet);
+
+        #show_current_window
+        self.obj_4_efficientdet.show();
+
+
+
+    def show_obj_5_pytorch_retinanet(self):
+        self.obj_5_pytorch_retinanet = WindowObj5PytorchRetinanet();
+
+        #backward
+        self.obj_5_pytorch_retinanet.backward_main.connect(self.show_detection_main);
+
+        #close other 
+        self.close_other_windows(self.obj_5_pytorch_retinanet);
+
+        #show_current_window
+        self.obj_5_pytorch_retinanet.show();
+
+
+
+    def show_obj_6_cornernet_lite(self):
+        self.obj_6_cornernet_lite = WindowObj6CornernetLite();
+
+        #backward
+        self.obj_6_cornernet_lite.backward_main.connect(self.show_detection_main);
+
+        #close other 
+        self.close_other_windows(self.obj_6_cornernet_lite);
+
+        #show_current_window
+        self.obj_6_cornernet_lite.show();
+
+
+
+    def show_obj_7_yolov3(self):
+        self.obj_7_yolov3 = WindowObj7Yolov3();
+
+        #backward
+        self.obj_7_yolov3.backward_main.connect(self.show_detection_main);
+
+        #close other 
+        self.close_other_windows(self.obj_7_yolov3);
+
+        #show_current_window
+        self.obj_7_yolov3.show();
+
+           
+
+
+
+
+app = QtWidgets.QApplication(sys.argv)
+controller = Controller()
+controller.show_main()
+sys.exit(app.exec_())
