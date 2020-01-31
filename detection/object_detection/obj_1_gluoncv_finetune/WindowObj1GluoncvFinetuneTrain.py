@@ -143,8 +143,8 @@ class WindowObj1GluoncvFinetuneTrain(QtWidgets.QWidget):
         with open('obj_1_gluoncv_finetune.json', 'w') as outfile:
             json.dump(self.system, outfile);
 
-        os.system("cp cfg/train_obj_1_gluoncv_finetune.py .");
-        os.system("cp cfg/train_obj_1_gluoncv_finetune.sh .");
+        os.system("cp cfg/detection/object_detection/obj_1_gluoncv_finetune/train_obj_1_gluoncv_finetune.py .");
+        os.system("cp cfg/detection/object_detection/obj_1_gluoncv_finetune/train_obj_1_gluoncv_finetune.sh .");
 
 
         self.process.start('bash', ['train_obj_1_gluoncv_finetune.sh'])
@@ -161,7 +161,7 @@ class WindowObj1GluoncvFinetuneTrain(QtWidgets.QWidget):
     def stdoutReady(self):
         text = str(self.process.readAllStandardOutput().data(), encoding='utf-8')
         if("Completed" in text):
-            QMessageBox.about(self, "Training Status", "Coompleted");
+            QMessageBox.about(self, "Training Status", "Completed");
             self.tb2.setText("Completed");
         if("Error" in text or "error" in text or "ImportError" in text):
             self.tb2.setText("Errors Found");

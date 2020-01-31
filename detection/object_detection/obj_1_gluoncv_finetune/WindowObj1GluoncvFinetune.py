@@ -114,22 +114,22 @@ class WindowObj1GluoncvFinetune(QtWidgets.QWidget):
     def install(self):
         self.tb1.setText("Installation Running");
         if(self.cb4.currentText() == "Cuda-9.0"):
-            os.system("cp cfg/install_obj_1_gluoncv_finetune_cuda90.sh .");
+            os.system("cp cfg/detection/object_detection/obj_1_gluoncv_finetune/install_obj_1_gluoncv_finetune_cuda90.sh .");
             os.system("chmod +x install_obj_1_gluoncv_finetune_cuda90.sh");
             self.process.start('bash', ['install_obj_1_gluoncv_finetune_cuda90.sh'])
             self.append("Process PID: " + str(self.process.pid()) + "\n");
         elif(self.cb4.currentText() == "Cuda-9.1"):
-            os.system("cp cfg/install_obj_1_gluoncv_finetune_cuda91.sh .");
+            os.system("cp cfg/detection/object_detection/obj_1_gluoncv_finetune/install_obj_1_gluoncv_finetune_cuda91.sh .");
             os.system("chmod +x install_obj_1_gluoncv_finetune_cuda91.sh");
             self.process.start('bash', ['install_obj_1_gluoncv_finetune_cuda91.sh'])
             self.append("Process PID: " + str(self.process.pid()) + "\n");
         elif(self.cb4.currentText() == "Cuda-10.0"):
-            os.system("cp cfg/install_obj_1_gluoncv_finetune_cuda10.sh .");
+            os.system("cp cfg/detection/object_detection/obj_1_gluoncv_finetune/install_obj_1_gluoncv_finetune_cuda10.sh .");
             os.system("chmod +x install_obj_1_gluoncv_finetune_cuda10.sh");
             self.process.start('bash', ['install_obj_1_gluoncv_finetune_cuda10.sh'])
             self.append("Process PID: " + str(self.process.pid()) + "\n");
         elif(self.cb4.currentText() == "Cuda-10.1"):
-            os.system("cp cfg/install_obj_1_gluoncv_finetune_cuda101.sh .");
+            os.system("cp cfg/detection/object_detection/obj_1_gluoncv_finetune/install_obj_1_gluoncv_finetune_cuda101.sh .");
             os.system("chmod +x install_obj_1_gluoncv_finetune_cuda101.sh");
             self.process.start('bash', ['install_obj_1_gluoncv_finetune_cuda101.sh'])
             self.append("Process PID: " + str(self.process.pid()) + "\n");

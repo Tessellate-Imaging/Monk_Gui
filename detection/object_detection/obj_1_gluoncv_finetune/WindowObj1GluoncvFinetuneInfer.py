@@ -222,8 +222,8 @@ class WindowObj1GluoncvFinetuneInfer(QtWidgets.QWidget):
         with open('obj_1_gluoncv_finetune_infer.json', 'w') as outfile:
             json.dump(self.system, outfile)
 
-        os.system("cp cfg/infer_obj_1_gluoncv_finetune.py .");
-        os.system("cp cfg/infer_obj_1_gluoncv_finetune.sh .");
+        os.system("cp cfg/detection/object_detection/obj_1_gluoncv_finetune/infer_obj_1_gluoncv_finetune.py .");
+        os.system("cp cfg/detection/object_detection/obj_1_gluoncv_finetune/infer_obj_1_gluoncv_finetune.sh .");
 
         self.process.start('bash', ['infer_obj_1_gluoncv_finetune.sh'])
         self.append("Process PID: " + str(self.process.pid()) + "\n");
@@ -265,8 +265,9 @@ class WindowObj1GluoncvFinetuneInfer(QtWidgets.QWidget):
 
 
 
-
+'''
 app = QApplication(sys.argv)
 screen = WindowObj1GluoncvFinetuneInfer()
 screen.show()
 sys.exit(app.exec_())
+'''
