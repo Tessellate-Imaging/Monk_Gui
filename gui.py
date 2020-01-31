@@ -19,6 +19,14 @@ from detection.object_detection.obj_1_gluoncv_finetune.WindowObj1GluoncvFinetune
 
 
 from detection.object_detection.obj_2_pytorch_finetune.WindowObj2PytorchFinetune import WindowObj2PytorchFinetune
+from detection.object_detection.obj_2_pytorch_finetune.WindowObj2PytorchFinetuneDataParam import WindowObj2PytorchFinetuneDataParam
+from detection.object_detection.obj_2_pytorch_finetune.WindowObj2PytorchFinetuneValDataParam import WindowObj2PytorchFinetuneValDataParam
+from detection.object_detection.obj_2_pytorch_finetune.WindowObj2PytorchFinetuneModelParam import WindowObj2PytorchFinetuneModelParam
+from detection.object_detection.obj_2_pytorch_finetune.WindowObj2PytorchFinetuneHyperParam import WindowObj2PytorchFinetuneHyperParam
+from detection.object_detection.obj_2_pytorch_finetune.WindowObj2PytorchFinetuneTrain import WindowObj2PytorchFinetuneTrain
+from detection.object_detection.obj_2_pytorch_finetune.WindowObj2PytorchFinetuneInfer import WindowObj2PytorchFinetuneInfer
+
+
 from detection.object_detection.obj_3_mxrcnn.WindowObj3Mxrcnn import WindowObj3Mxrcnn
 from detection.object_detection.obj_4_efficientdet.WindowObj4Efficientdet import WindowObj4Efficientdet
 from detection.object_detection.obj_5_pytorch_retinanet.WindowObj5PytorchRetinanet import WindowObj5PytorchRetinanet
@@ -227,14 +235,8 @@ class Controller:
         self.obj_1_gluoncv_finetune_train.show();
 
 
-    
-
-
     def show_obj_1_gluoncv_finetune_infer(self):
         self.obj_1_gluoncv_finetune_infer = WindowObj1GluoncvFinetuneInfer();
-
-        #forward
-
 
         #backward
         self.obj_1_gluoncv_finetune_infer.backward_1_gluoncv_finetune.connect(self.show_obj_1_gluoncv_finetune);
@@ -250,17 +252,135 @@ class Controller:
 
 
 
+
+
+
     def show_obj_2_pytorch_finetune(self):
         self.obj_2_pytorch_finetune = WindowObj2PytorchFinetune();
 
+        #forward
+        self.obj_2_pytorch_finetune.forward_train.connect(self.show_obj_2_pytorch_finetune_data_param)
+        self.obj_2_pytorch_finetune.forward_infer.connect(self.show_obj_2_pytorch_finetune_infer)
+
         #backward
-        self.obj_2_pytorch_finetune.backward_main.connect(self.show_detection_main);
+        self.obj_2_pytorch_finetune.backward_obj.connect(self.show_detection_main);
 
         #close other 
         self.close_other_windows(self.obj_2_pytorch_finetune);
 
         #show_current_window
         self.obj_2_pytorch_finetune.show();
+
+
+    
+    def show_obj_2_pytorch_finetune_data_param(self):
+        self.obj_2_pytorch_finetune_data_param = WindowObj2PytorchFinetuneDataParam();
+
+        #forward
+        self.obj_2_pytorch_finetune_data_param.forward_val_data.connect(self.show_obj_2_pytorch_finetune_valdata_param)
+
+        #backward
+        self.obj_2_pytorch_finetune_data_param.backward_2_pytorch_finetune.connect(self.show_obj_2_pytorch_finetune);
+
+
+        #close other 
+        self.close_other_windows(self.obj_2_pytorch_finetune_data_param);
+
+        #show_current_window
+        self.obj_2_pytorch_finetune_data_param.show();
+
+
+    def show_obj_2_pytorch_finetune_valdata_param(self):
+        self.obj_2_pytorch_finetune_valdata_param = WindowObj2PytorchFinetuneValDataParam();
+
+        #forward
+        self.obj_2_pytorch_finetune_valdata_param.forward_model_param.connect(self.show_obj_2_pytorch_finetune_model_param)
+
+        #backward
+        self.obj_2_pytorch_finetune_valdata_param.backward_2_pytorch_finetune_data_param.connect(self.show_obj_2_pytorch_finetune_data_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_2_pytorch_finetune_valdata_param);
+
+        #show_current_window
+        self.obj_2_pytorch_finetune_valdata_param.show();
+
+
+    def show_obj_2_pytorch_finetune_model_param(self):
+        self.obj_2_pytorch_finetune_model_param = WindowObj2PytorchFinetuneModelParam();
+
+        #forward
+        self.obj_2_pytorch_finetune_model_param.forward_hyper_param.connect(self.show_obj_2_pytorch_finetune_hyper_param);
+
+        #backward
+        self.obj_2_pytorch_finetune_model_param.backward_2_pytorch_finetune_valdata_param.connect(self.show_obj_2_pytorch_finetune_valdata_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_2_pytorch_finetune_model_param);
+
+        #show_current_window
+        self.obj_2_pytorch_finetune_model_param.show();
+
+
+    def show_obj_2_pytorch_finetune_hyper_param(self):
+        self.obj_2_pytorch_finetune_hyper_param = WindowObj2PytorchFinetuneHyperParam();
+
+        #forward
+        self.obj_2_pytorch_finetune_hyper_param.forward_train.connect(self.show_obj_2_pytorch_finetune_train)
+
+        #backward
+        self.obj_2_pytorch_finetune_hyper_param.backward_model_param.connect(self.show_obj_2_pytorch_finetune_model_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_2_pytorch_finetune_hyper_param);
+
+        #show_current_window
+        self.obj_2_pytorch_finetune_hyper_param.show();
+
+
+    def show_obj_2_pytorch_finetune_train(self):
+        self.obj_2_pytorch_finetune_train = WindowObj2PytorchFinetuneTrain();
+
+        #forward
+        self.obj_2_pytorch_finetune_train.forward_2_finetune_finetune.connect(self.show_obj_2_pytorch_finetune)
+
+        #backward
+        self.obj_2_pytorch_finetune_train.backward_hyper_param.connect(self.show_obj_2_pytorch_finetune_hyper_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_2_pytorch_finetune_train);
+
+        #show_current_window
+        self.obj_2_pytorch_finetune_train.show();
+
+
+    def show_obj_2_pytorch_finetune_infer(self):
+        self.obj_2_pytorch_finetune_infer = WindowObj2PytorchFinetuneInfer();
+
+        #backward
+        self.obj_2_pytorch_finetune_infer.backward_2_pytorch_finetune.connect(self.show_obj_2_pytorch_finetune);
+
+
+        #close other 
+        self.close_other_windows(self.obj_2_pytorch_finetune_infer);
+
+        #show_current_window
+        self.obj_2_pytorch_finetune_infer.show();
+	
+
+
+
+
+
+
+
+
+
+
 
 
 
