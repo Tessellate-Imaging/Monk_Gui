@@ -1,4 +1,5 @@
-# Monk_Gui
+# Monk_Gui [![HitCount](http://hits.dwyl.io/Tessellate-Imaging/Monk_Gui.svg)](http://hits.dwyl.io/Tessellate-Imaging/Monk_Gui)
+
 A Graphical user Interface for deep learning and computer vision over Monk Libraries
 <br />
 <br />
