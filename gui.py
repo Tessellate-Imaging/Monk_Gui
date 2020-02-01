@@ -28,6 +28,14 @@ from detection.object_detection.obj_2_pytorch_finetune.WindowObj2PytorchFinetune
 
 
 from detection.object_detection.obj_3_mxrcnn.WindowObj3Mxrcnn import WindowObj3Mxrcnn
+from detection.object_detection.obj_3_mxrcnn.WindowObj3MxrcnnDataParam import WindowObj3MxrcnnDataParam
+from detection.object_detection.obj_3_mxrcnn.WindowObj3MxrcnnDataPreproc import WindowObj3MxrcnnDataPreproc
+from detection.object_detection.obj_3_mxrcnn.WindowObj3MxrcnnModelParam import WindowObj3MxrcnnModelParam
+from detection.object_detection.obj_3_mxrcnn.WindowObj3MxrcnnHyperParam import WindowObj3MxrcnnHyperParam
+from detection.object_detection.obj_3_mxrcnn.WindowObj3MxrcnnTrain import WindowObj3MxrcnnTrain
+from detection.object_detection.obj_3_mxrcnn.WindowObj3MxrcnnInfer import WindowObj3MxrcnnInfer
+
+
 from detection.object_detection.obj_4_efficientdet.WindowObj4Efficientdet import WindowObj4Efficientdet
 from detection.object_detection.obj_5_pytorch_retinanet.WindowObj5PytorchRetinanet import WindowObj5PytorchRetinanet
 from detection.object_detection.obj_6_cornernet_lite.WindowObj6CornernetLite import WindowObj6CornernetLite
@@ -381,20 +389,126 @@ class Controller:
 
 
 
-
-
-
     def show_obj_3_mxrcnn(self):
         self.obj_3_mxrcnn = WindowObj3Mxrcnn();
 
+        #forward
+        self.obj_3_mxrcnn.forward_train.connect(self.show_obj_3_mxrcnn_data_param)
+        self.obj_3_mxrcnn.forward_infer.connect(self.show_obj_3_mxrcnn_infer)
+
         #backward
-        self.obj_3_mxrcnn.backward_main.connect(self.show_detection_main);
+        self.obj_3_mxrcnn.backward_obj.connect(self.show_detection_main);
 
         #close other 
         self.close_other_windows(self.obj_3_mxrcnn);
 
         #show_current_window
         self.obj_3_mxrcnn.show();
+
+
+    def show_obj_3_mxrcnn_data_param(self):
+        self.obj_3_mxrcnn_data_param = WindowObj3MxrcnnDataParam();
+
+        #forward
+        self.obj_3_mxrcnn_data_param.forward_data_preproc.connect(self.show_obj_3_mxrcnn_data_preproc)
+
+        #backward
+        self.obj_3_mxrcnn_data_param.backward_3_mxrcnn.connect(self.show_obj_3_mxrcnn);
+
+
+        #close other 
+        self.close_other_windows(self.obj_3_mxrcnn_data_param);
+
+        #show_current_window
+        self.obj_3_mxrcnn_data_param.show();
+
+
+    def show_obj_3_mxrcnn_data_preproc(self):
+        self.obj_3_mxrcnn_data_preproc = WindowObj3MxrcnnDataPreproc();
+
+        #forward
+        self.obj_3_mxrcnn_data_preproc.forward_model_param.connect(self.show_obj_3_mxrcnn_model_param)
+
+        #backward
+        self.obj_3_mxrcnn_data_preproc.backward_3_mxrcnn_data_param.connect(self.show_obj_3_mxrcnn_data_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_3_mxrcnn_data_preproc);
+
+        #show_current_window
+        self.obj_3_mxrcnn_data_preproc.show();
+
+
+    def show_obj_3_mxrcnn_model_param(self):
+        self.obj_3_mxrcnn_model_param = WindowObj3MxrcnnModelParam();
+
+        #forward
+        self.obj_3_mxrcnn_model_param.forward_hyper_param.connect(self.show_obj_3_mxrcnn_hyper_param);
+
+        #backward
+        self.obj_3_mxrcnn_model_param.backward_3_mxrcnn_data_preproc.connect(self.show_obj_3_mxrcnn_data_preproc);
+
+
+        #close other 
+        self.close_other_windows(self.obj_3_mxrcnn_model_param);
+
+        #show_current_window
+        self.obj_3_mxrcnn_model_param.show();
+
+
+    def show_obj_3_mxrcnn_hyper_param(self):
+        self.obj_3_mxrcnn_hyper_param = WindowObj3MxrcnnHyperParam();
+
+        #forward
+        self.obj_3_mxrcnn_hyper_param.forward_train.connect(self.show_obj_3_mxrcnn_train)
+
+        #backward
+        self.obj_3_mxrcnn_hyper_param.backward_model_param.connect(self.show_obj_3_mxrcnn_model_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_3_mxrcnn_hyper_param);
+
+        #show_current_window
+        self.obj_3_mxrcnn_hyper_param.show();
+
+
+    def show_obj_3_mxrcnn_train(self):
+        self.obj_3_mxrcnn_train = WindowObj3MxrcnnTrain();
+
+        #forward
+        self.obj_3_mxrcnn_train.forward_3_mxrcnn.connect(self.show_obj_3_mxrcnn)
+
+        #backward
+        self.obj_3_mxrcnn_train.backward_hyper_param.connect(self.show_obj_3_mxrcnn_hyper_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_3_mxrcnn_train);
+
+        #show_current_window
+        self.obj_3_mxrcnn_train.show();
+
+
+    def show_obj_3_mxrcnn_infer(self):
+        self.obj_3_mxrcnn_infer = WindowObj3MxrcnnInfer();
+
+        #backward
+        self.obj_3_mxrcnn_infer.backward_3_mxrcnn.connect(self.show_obj_3_mxrcnn);
+
+
+        #close other 
+        self.close_other_windows(self.obj_3_mxrcnn_infer);
+
+        #show_current_window
+        self.obj_3_mxrcnn_infer.show();
+
+
+
+
+
+
 
 
 
