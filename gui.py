@@ -37,6 +37,14 @@ from detection.object_detection.obj_3_mxrcnn.WindowObj3MxrcnnInfer import Window
 
 
 from detection.object_detection.obj_4_efficientdet.WindowObj4Efficientdet import WindowObj4Efficientdet
+from detection.object_detection.obj_4_efficientdet.WindowObj4EfficientdetDataParam import WindowObj4EfficientdetDataParam
+from detection.object_detection.obj_4_efficientdet.WindowObj4EfficientdetValDataParam import WindowObj4EfficientdetValDataParam
+from detection.object_detection.obj_4_efficientdet.WindowObj4EfficientdetModelParam import WindowObj4EfficientdetModelParam
+from detection.object_detection.obj_4_efficientdet.WindowObj4EfficientdetHyperParam import WindowObj4EfficientdetHyperParam
+from detection.object_detection.obj_4_efficientdet.WindowObj4EfficientdetTrain import WindowObj4EfficientdetTrain
+from detection.object_detection.obj_4_efficientdet.WindowObj4EfficientdetInfer  import WindowObj4EfficientdetInfer
+
+
 from detection.object_detection.obj_5_pytorch_retinanet.WindowObj5PytorchRetinanet import WindowObj5PytorchRetinanet
 from detection.object_detection.obj_6_cornernet_lite.WindowObj6CornernetLite import WindowObj6CornernetLite
 from detection.object_detection.obj_7_yolov3.WindowObj7Yolov3 import WindowObj7Yolov3
@@ -515,14 +523,129 @@ class Controller:
     def show_obj_4_efficientdet(self):
         self.obj_4_efficientdet = WindowObj4Efficientdet();
 
+        #forward
+        self.obj_4_efficientdet.forward_train.connect(self.show_obj_4_efficientdet_data_param)
+        self.obj_4_efficientdet.forward_infer.connect(self.show_obj_4_efficientdet_infer)
+
         #backward
-        self.obj_4_efficientdet.backward_main.connect(self.show_detection_main);
+        self.obj_4_efficientdet.backward_obj.connect(self.show_detection_main);
 
         #close other 
         self.close_other_windows(self.obj_4_efficientdet);
 
         #show_current_window
         self.obj_4_efficientdet.show();
+
+
+    def show_obj_4_efficientdet_data_param(self):
+        self.obj_4_efficientdet_data_param = WindowObj4EfficientdetDataParam();
+
+        #forward
+        self.obj_4_efficientdet_data_param.forward_valdata_param.connect(self.show_obj_4_efficientdet_valdata_param)
+
+        #backward
+        self.obj_4_efficientdet_data_param.backward_4_efficientdet.connect(self.show_obj_4_efficientdet);
+
+
+        #close other 
+        self.close_other_windows(self.obj_4_efficientdet_data_param);
+
+        #show_current_window
+        self.obj_4_efficientdet_data_param.show();
+
+
+    def show_obj_4_efficientdet_valdata_param(self):
+        self.obj_4_efficientdet_valdata_param = WindowObj4EfficientdetValDataParam();
+
+        #forward
+        self.obj_4_efficientdet_valdata_param.forward_hyper_param.connect(self.show_obj_4_efficientdet_model_param)
+
+        #backward
+        self.obj_4_efficientdet_valdata_param.backward_4_efficientdet_data_preproc.connect(self.show_obj_4_efficientdet_data_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_4_efficientdet_valdata_param);
+
+        #show_current_window
+        self.obj_4_efficientdet_valdata_param.show();
+
+
+
+    def show_obj_4_efficientdet_model_param(self):
+        self.obj_4_efficientdet_model_param = WindowObj4EfficientdetModelParam();
+
+        #forward
+        self.obj_4_efficientdet_model_param.forward_hyper_param.connect(self.show_obj_4_efficientdet_hyper_param);
+
+        #backward
+        self.obj_4_efficientdet_model_param.backward_4_efficientdet_valdata_param.connect(self.show_obj_4_efficientdet_valdata_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_4_efficientdet_model_param);
+
+        #show_current_window
+        self.obj_4_efficientdet_model_param.show();
+
+
+
+    def show_obj_4_efficientdet_hyper_param(self):
+        self.obj_4_efficientdet_hyper_param = WindowObj4EfficientdetHyperParam();
+
+        #forward
+        self.obj_4_efficientdet_hyper_param.forward_train.connect(self.show_obj_4_efficientdet_train)
+
+        #backward
+        self.obj_4_efficientdet_hyper_param.backward_model_param.connect(self.show_obj_4_efficientdet_model_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_4_efficientdet_hyper_param);
+
+        #show_current_window
+        self.obj_4_efficientdet_hyper_param.show();
+
+
+    def show_obj_4_efficientdet_train(self):
+        self.obj_4_efficientdet_train = WindowObj4EfficientdetTrain();
+
+        #forward
+        self.obj_4_efficientdet_train.forward_4_efficientdet.connect(self.show_obj_4_efficientdet)
+
+        #backward
+        self.obj_4_efficientdet_train.backward_hyper_param.connect(self.show_obj_4_efficientdet_hyper_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_4_efficientdet_train);
+
+        #show_current_window
+        self.obj_4_efficientdet_train.show();
+
+
+
+    def show_obj_4_efficientdet_infer(self):
+        self.obj_4_efficientdet_infer = WindowObj4EfficientdetInfer();
+
+        #backward
+        self.obj_4_efficientdet_infer.backward_4_efficientdet.connect(self.show_obj_4_efficientdet);
+
+
+        #close other 
+        self.close_other_windows(self.obj_4_efficientdet_infer);
+
+        #show_current_window
+        self.obj_4_efficientdet_infer.show();
+
+
+
+
+
+
+
+
+
 
 
 

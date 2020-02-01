@@ -7,14 +7,14 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 
 
-class WindowObj3MxrcnnTrain(QtWidgets.QWidget):
+class WindowObj4EfficientdetTrain(QtWidgets.QWidget):
 
     backward_hyper_param = QtCore.pyqtSignal();
-    forward_3_mxrcnn = QtCore.pyqtSignal(); 
+    forward_4_efficientdet = QtCore.pyqtSignal(); 
 
     def __init__(self):
         super().__init__()
-        self.title = 'Mxrcnn - Train'
+        self.title = 'Efficient Detection - Train'
         self.left = 100
         self.top = 100
         self.width = 900
@@ -23,8 +23,8 @@ class WindowObj3MxrcnnTrain(QtWidgets.QWidget):
         self.initUI()
 
     def load_cfg(self):
-        if(os.path.isfile("obj_3_mxrcnn.json")):
-            with open('obj_3_mxrcnn.json') as json_file:
+        if(os.path.isfile("obj_4_efficientdet.json")):
+            with open('obj_4_efficientdet.json') as json_file:
                 self.system = json.load(json_file)
 
 
@@ -63,22 +63,22 @@ class WindowObj3MxrcnnTrain(QtWidgets.QWidget):
 
 
         self.l2 = QLabel(self);
-        self.l2.setText("Saved Model Name: ");
+        self.l2.setText("Output Model Dir: ");
         self.l2.move(20, 350);
 
         self.e2 = QLineEdit(self)
         self.e2.move(170, 350);
-        self.e2.setText(self.system["output_model_name"]);
+        self.e2.setText(self.system["output_model_dir"]);
         self.e2.resize(200, 25);
 
 
         self.l3 = QLabel(self);
-        self.l3.setText("Display interval (iterations): ");
+        self.l3.setText("Val interval: ");
         self.l3.move(20, 400);
 
         self.e3 = QLineEdit(self)
-        self.e3.move(220, 400);
-        self.e3.setText(self.system["log_interval"]);
+        self.e3.move(170, 400);
+        self.e3.setText(self.system["val_interval"]);
         self.e3.resize(150, 25);
 
 
@@ -151,20 +151,39 @@ class WindowObj3MxrcnnTrain(QtWidgets.QWidget):
         else:
             wr += "Img Dir -    {}\n".format(self.system["coco_img_dir"]);
 
+        if(self.system["val_data"] == "yes"):
+            if(self.system["anno_type"] == "monk"):
+                wr += "Root Dir -   {}\n".format(self.system["val_monk_root_dir"]);
+            elif(self.system["anno_type"] == "voc"):
+                wr += "Root Dir -   {}\n".format(self.system["val_voc_root_dir"]);
+            else:
+                wr += "Root Dir -   {}\n".format(self.system["val_coco_root_dir"]);
 
-        wr += "Img short side - {}\n".format(self.system["img_short_side"]);
-        wr += "Img long side  - {}\n".format(self.system["img_long_side"]);
-        wr += "Norm-mean      - {}\n".format(self.system["mean"]);
-        wr += "Norm-std       - {}\n".format(self.system["std"]);
+            if(self.system["anno_type"] == "monk"):
+                wr += "Anno Dir -   {}\n".format(self.system["val_monk_anno_file"]);
+            elif(self.system["anno_type"] == "voc"):
+                wr += "Anno File -  {}\n".format(self.system["val_voc_anno_dir"]);
+            else:
+                wr += "Coco Dir -   {}\n".format(self.system["val_coco_coco_dir"]);
 
-        wr += "Model -  {}\n".format(self.system["model"]);
-        wr += "Pretrained - {}\n".format(self.system["use_pretrained"]);
+            if(self.system["anno_type"] == "monk"):
+                wr += "Img Dir -    {}\n".format(self.system["val_monk_img_dir"]);
+            elif(self.system["anno_type"] == "voc"):
+                wr += "Img Dir -    {}\n".format(self.system["val_voc_img_dir"]);
+            else:
+                wr += "Img Dir -    {}\n".format(self.system["val_coco_img_dir"]);
+
+
+        wr += "Image size - {}\n".format(self.system["image_size"]);
         wr += "GPU -        {}\n".format(self.system["use_gpu"]);
         if(self.system["use_gpu"]):
             wr += "Devices -    {}\n".format(self.system["devices"]);
 
         wr += "Learning rate  - {}\n".format(self.system["lr"]);
-        wr += "LR Decay epochs- {}\n".format(self.system["lr_decay_epoch"])
+        wr += "Val Interval   - {}\n".format(self.system["val_interval"])
+
+        wr += "es_min_data    - {}\n".format(self.system["es_min_delta"]);
+        wr += "es_patience    - {}\n".format(self.system["es_patience"])
 
         return wr;
 
@@ -175,17 +194,17 @@ class WindowObj3MxrcnnTrain(QtWidgets.QWidget):
         self.te1.setText("");
         self.tb2.setText("Running");
         self.system["epochs"] = self.e1.text();
-        self.system["output_model_name"] = self.e2.text();
-        self.system["log_interval"] = self.e3.text();
+        self.system["output_model_dir"] = self.e2.text();
+        self.system["val_interval"] = self.e3.text();
 
-        with open('obj_3_mxrcnn.json', 'w') as outfile:
+        with open('obj_4_efficientdet.json', 'w') as outfile:
             json.dump(self.system, outfile);
 
-        os.system("cp cfg/detection/object_detection/obj_3_mxrcnn/train_obj_3_mxrcnn.py .");
-        os.system("cp cfg/detection/object_detection/obj_3_mxrcnn/train_obj_3_mxrcnn.sh .");
+        os.system("cp cfg/detection/object_detection/obj_4_efficientdet/train_obj_4_efficientdet.py .");
+        os.system("cp cfg/detection/object_detection/obj_4_efficientdet/train_obj_4_efficientdet.sh .");
 
 
-        self.process.start('bash', ['train_obj_3_mxrcnn.sh'])
+        self.process.start('bash', ['train_obj_4_efficientdet.sh'])
         self.append("Process PID: " + str(self.process.pid()) + "\n");
 
 
@@ -222,26 +241,28 @@ class WindowObj3MxrcnnTrain(QtWidgets.QWidget):
 
     def forward(self):
         self.system["epochs"] = self.e1.text();
-        self.system["output_model_name"] = self.e2.text();
-        self.system["log_interval"] = self.e3.text();
+        self.system["output_model_dir"] = self.e2.text();
+        self.system["val_interval"] = self.e3.text();
 
-        with open('obj_3_mxrcnn.json', 'w') as outfile:
+        with open('obj_4_efficientdet.json', 'w') as outfile:
             json.dump(self.system, outfile);
-        self.forward_3_mxrcnn.emit();
+
+        self.forward_4_efficientdet.emit();
 
     def backward(self):
         self.system["epochs"] = self.e1.text();
-        self.system["output_model_name"] = self.e2.text();
-        self.system["log_interval"] = self.e3.text();
+        self.system["output_model_dir"] = self.e2.text();
+        self.system["val_interval"] = self.e3.text();
 
-        with open('obj_3_mxrcnn.json', 'w') as outfile:
+        with open('obj_4_efficientdet.json', 'w') as outfile:
             json.dump(self.system, outfile);
+
         self.backward_hyper_param.emit();
 
 
 '''
 app = QApplication(sys.argv)
-screen = WindowObj3MxrcnnTrain()
+screen = WindowObj4EfficientdetTrain()
 screen.show()
 sys.exit(app.exec_())
 '''

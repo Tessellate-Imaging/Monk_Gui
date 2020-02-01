@@ -6,25 +6,25 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 
 
-class WindowObj3MxrcnnDataParam(QtWidgets.QWidget):
+class WindowObj4EfficientdetDataParam(QtWidgets.QWidget):
 
-    backward_3_mxrcnn = QtCore.pyqtSignal();
-    forward_data_preproc = QtCore.pyqtSignal();
+    backward_4_efficientdet = QtCore.pyqtSignal();
+    forward_valdata_param = QtCore.pyqtSignal();
 
     def __init__(self):
         super().__init__()
-        self.title = 'Mxrcnn - Training Data Param'
-        self.left = 100
-        self.top = 100
+        self.title = 'Efficient Detection - Training Data Param'
+        self.left = 10
+        self.top = 10
         self.width = 800
-        self.height = 500
+        self.height = 600
         self.cfg_setup();
         self.initUI();
 
 
     def cfg_setup(self):
-        if(os.path.isfile("obj_3_mxrcnn.json")):
-            with open('obj_3_mxrcnn.json') as json_file:
+        if(os.path.isfile("obj_4_efficientdet.json")):
+            with open('obj_4_efficientdet.json') as json_file:
                 self.system = json.load(json_file)
         else:
             self.system = {};
@@ -40,27 +40,40 @@ class WindowObj3MxrcnnDataParam(QtWidgets.QWidget):
 
             self.system["coco_root_dir"] = "Monk_Object_Detection/example_notebooks/sample_dataset/";
             self.system["coco_coco_dir"] = "kangaroo";
-            self.system["coco_img_dir"] = "Images";
+            self.system["coco_img_dir"] = "";
+            self.system["coco_set_dir"] = "Images"
+
+            self.system["val_data"] = "no";
+
+            self.system["val_monk_root_dir"] = "Monk_Object_Detection/example_notebooks/sample_dataset/kangaroo/";
+            self.system["val_monk_img_dir"] = "Images";
+            self.system["val_monk_anno_file"] = "train_labels.csv";
+
+            self.system["val_voc_root_dir"] = "Monk_Object_Detection/example_notebooks/sample_dataset/kangaroo/";
+            self.system["val_voc_img_dir"] = "Images";
+            self.system["val_voc_anno_dir"] = "";
+
+            self.system["val_coco_root_dir"] = "Monk_Object_Detection/example_notebooks/sample_dataset/";
+            self.system["val_coco_coco_dir"] = "kangaroo";
+            self.system["val_coco_img_dir"] = "";
+            self.system["val_coco_set_dir"] = "Images";
+
 
             self.system["batch_size"] = "4";
 
-            self.system["img_short_side"] = "600";
-            self.system["img_long_side"] = "1000";
-            self.system["mean"] = "123.68, 116.779, 103.939";
-            self.system["std"] = "1.0, 1.0, 1.0";
-
-            self.system["model"] = "resnet50";
-            self.system["use_pretrained"] = "yes";
+            self.system["image_size"] = "512";
             self.system["use_gpu"] = "yes";
             self.system["devices"] = "0";
+
+            self.system["es_min_delta"] = "0.0";
+            self.system["es_patience"] = "0";
             
             self.system["lr"] = "0.001";
-            self.system["lr_decay_epoch"] = "2, 4";
+            self.system["val_interval"] = "2";
             self.system["epochs"] = "5";
-            self.system["log_interval"] = "100";
-            self.system["output_model_name"] = "model_resnet50";
+            self.system["output_model_dir"] = "trained";
 
-            with open('obj_3_mxrcnn.json', 'w') as outfile:
+            with open('obj_4_efficientdet.json', 'w') as outfile:
                 json.dump(self.system, outfile)
 
 
@@ -72,17 +85,17 @@ class WindowObj3MxrcnnDataParam(QtWidgets.QWidget):
 
         # Backward
         self.b1 = QPushButton('Back', self)
-        self.b1.move(500,450)
+        self.b1.move(500,550)
         self.b1.clicked.connect(self.backward)
 
         # Forward
         self.b2 = QPushButton('Next', self)
-        self.b2.move(600,450)
+        self.b2.move(600,550)
         self.b2.clicked.connect(self.forward);
 
         # Quit
         self.b3 = QPushButton('Quit', self)
-        self.b3.move(700,450)
+        self.b3.move(700,550)
         self.b3.clicked.connect(self.close)
 
         
@@ -93,7 +106,6 @@ class WindowObj3MxrcnnDataParam(QtWidgets.QWidget):
         self.tb1.setReadOnly(True)
         
 
-        
         self.r1 = QRadioButton("Monk format", self)
         if self.system["anno_type"] == "monk":
             self.r1.setChecked(True)
@@ -277,6 +289,11 @@ class WindowObj3MxrcnnDataParam(QtWidgets.QWidget):
         self.c_b2.clicked.connect(self.select_coco_dir)
         self.c.append(self.c_b2);
 
+        self.c_b2_1 = QPushButton('Set Blank', self)
+        self.c_b2_1.move(650,180)
+        self.c_b2_1.clicked.connect(self.select_coco_dir_blank)
+        self.c.append(self.c_b2_1);
+
         self.c_tb2 = QTextEdit(self)
         self.c_tb2.move(450, 210)
         self.c_tb2.resize(300, 50)
@@ -295,6 +312,11 @@ class WindowObj3MxrcnnDataParam(QtWidgets.QWidget):
         self.c_b3.clicked.connect(self.select_img_dir)
         self.c.append(self.c_b3);
 
+        self.c_b3_1 = QPushButton('Set Blank', self)
+        self.c_b3_1.move(650,280)
+        self.c_b3_1.clicked.connect(self.select_img_dir_blank)
+        self.c.append(self.c_b3_1);
+
         self.c_tb3 = QTextEdit(self)
         self.c_tb3.move(450, 310)
         self.c_tb3.resize(300, 50)
@@ -302,13 +324,38 @@ class WindowObj3MxrcnnDataParam(QtWidgets.QWidget):
         self.c_tb3.setReadOnly(True)
         self.c.append(self.c_tb3);
 
+
+        self.c_l5 = QLabel(self);
+        self.c_l5.setText("4. set_dir:");
+        self.c_l5.move(450, 380);
+        self.c.append(self.c_l5);
+
+        self.c_b5 = QPushButton('Select Folder', self)
+        self.c_b5.move(550,380)
+        self.c_b5.clicked.connect(self.select_set_dir)
+        self.c.append(self.c_b5);
+
+        self.c_b5_1 = QPushButton('Set Blank', self)
+        self.c_b5_1.move(650,380)
+        self.c_b5_1.clicked.connect(self.select_set_dir_blank)
+        self.c.append(self.c_b5_1);
+
+        self.c_tb5 = QTextEdit(self)
+        self.c_tb5.move(450, 410)
+        self.c_tb5.resize(300, 50)
+        self.c_tb5.setText(self.system["coco_set_dir"]);
+        self.c_tb5.setReadOnly(True)
+        self.c.append(self.c_tb5);
+
+
+
         self.c_l4 = QLabel(self);
-        self.c_l4.setText("4. batch_size:");
-        self.c_l4.move(450, 380);
+        self.c_l4.setText("5. batch_size:");
+        self.c_l4.move(450, 480);
         self.c.append(self.c_l4);
 
         self.c_e4 = QLineEdit(self)
-        self.c_e4.move(550, 380);
+        self.c_e4.move(550, 480);
         self.c_e4.setText(self.system["batch_size"]);
         self.c_e4.resize(200, 25);
         self.c.append(self.c_e4);
@@ -382,10 +429,14 @@ class WindowObj3MxrcnnDataParam(QtWidgets.QWidget):
         options |= QFileDialog.DontUseNativeDialog
         folderName = QFileDialog.getExistingDirectory(self,"QFileDialog.getExistingDirectory()", self.system["coco_root_dir"])
         folderName = folderName.split("/")[-1];
-        self.v_b2.setText("Selected");
-        self.v_tb2.setText(folderName);
+        self.c_b2.setText("Selected");
+        self.c_tb2.setText(folderName);
         self.system["coco_coco_dir"] = folderName;
 
+
+    def select_coco_dir_blank(self):
+        self.c_tb2.setText("");
+        self.system["coco_coco_dir"] = "";
 
 
     def select_img_dir(self):
@@ -413,6 +464,10 @@ class WindowObj3MxrcnnDataParam(QtWidgets.QWidget):
             self.c_tb3.setText(folderName);
             self.system["coco_img_dir"] = folderName;
 
+    def select_img_dir_blank(self):
+        self.c_tb3.setText("");
+        self.system["coco_img_dir"] = "";
+
         
 
     def select_anno_file(self):
@@ -437,23 +492,38 @@ class WindowObj3MxrcnnDataParam(QtWidgets.QWidget):
         self.system["voc_anno_dir"] = folderName;
 
 
+    def select_set_dir(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        folderName = QFileDialog.getExistingDirectory(self,"QFileDialog.getExistingDirectory()", 
+            self.system["coco_root_dir"] + "/" + self.system["coco_coco_dir"] + "/" + self.system["coco_img_dir"])
+        folderName = folderName.split("/")[-1];
+        self.c_b5.setText("Selected");
+        self.c_tb5.setText(folderName);
+        self.system["coco_set_dir"] = folderName;
+
+    def select_set_dir_blank(self):
+        self.c_tb5_1.setText("");
+        self.system["coco_set_dir"] = "";
+
+
 
     def forward(self):
         if self.r1.isChecked():
             self.system["anno_type"] = "monk";
             self.system["batch_size"] = self.m_e4.text();
-        elif self.r2.isChecked():
+        if self.r2.isChecked():
             self.system["anno_type"] = "voc";
             self.system["batch_size"] = self.v_e4.text();
-        else:
+        if self.r3.isChecked():
             self.system["anno_type"] = "coco";
             self.system["batch_size"] = self.c_e4.text();
 
-        with open('obj_3_mxrcnn.json', 'w') as outfile:
+        with open('obj_4_efficientdet.json', 'w') as outfile:
             json.dump(self.system, outfile)
 
 
-        self.forward_data_preproc.emit();
+        self.forward_valdata_param.emit();
 
 
 
@@ -461,17 +531,17 @@ class WindowObj3MxrcnnDataParam(QtWidgets.QWidget):
         if self.r1.isChecked():
             self.system["anno_type"] = "monk";
             self.system["batch_size"] = self.m_e4.text();
-        elif self.r2.isChecked():
+        if self.r2.isChecked():
             self.system["anno_type"] = "voc";
             self.system["batch_size"] = self.v_e4.text();
-        else:
+        if self.r3.isChecked():
             self.system["anno_type"] = "coco";
             self.system["batch_size"] = self.c_e4.text();
 
-        with open('obj_3_mxrcnn.json', 'w') as outfile:
+        with open('obj_4_efficientdet.json', 'w') as outfile:
             json.dump(self.system, outfile)
 
-        self.backward_3_mxrcnn.emit();
+        self.backward_4_efficientdet.emit();
 
 
     def monk_format(self):
@@ -529,20 +599,20 @@ class WindowObj3MxrcnnDataParam(QtWidgets.QWidget):
         wr += "      |\n";
         wr += "      |------kangaroo (coco_dir)\n";
         wr += "      |         |\n";
-        wr += "      |         |---Images (img_dir)\n";
+        wr += "      |         |---Images (set_dir)\n";
         wr += "      |         |----|\n";
         wr += "      |              |-------------------img1.jpg\n";
         wr += "      |              |-------------------img2.jpg\n";
         wr += "      |              |------------------.........(and so on)\n";
         wr += "      |\n";
         wr += "      |\n";
-        wr += "      |         |---annotations (anno_dir)\n";
+        wr += "      |         |---annotations\n";
         wr += "      |         |----|\n";
         wr += "      |              |--------------------instances_Images.json\n";
         wr += "      |              |--------------------classes.txt\n"
         wr += "\n";
         wr += "\n";
-        wr += "    instances_Train.json -> In proper COCO format\n";
+        wr += "    instances_Images.json -> In proper COCO format\n";
         wr += "    Note: Annotation file name too coincides against the set_dir\n";
         wr += "    classes.txt -> A list of classes in alphabetical order\n";
 
@@ -551,7 +621,7 @@ class WindowObj3MxrcnnDataParam(QtWidgets.QWidget):
 
 '''
 app = QApplication(sys.argv)
-screen = WindowObj3MxrcnnDataParam()
+screen = WindowObj4EfficientdetDataParam()
 screen.show()
 sys.exit(app.exec_())
 '''

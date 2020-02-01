@@ -15,7 +15,7 @@ class WindowObj3MxrcnnInfer(QtWidgets.QWidget):
 
     def __init__(self):
         super().__init__()
-        self.title = 'GluonCV Finetune - Infer'
+        self.title = 'Mxrcnn - Infer'
         self.left = 10
         self.top = 10
         self.width = 900
@@ -223,7 +223,7 @@ class WindowObj3MxrcnnInfer(QtWidgets.QWidget):
         self.system["mean"] = self.e8.text();
         self.system["std"] = self.e9.text();
 
-        with open('obj_1_gluoncv_finetune_infer.json', 'w') as outfile:
+        with open('obj_3_mxrcnn_infer.json', 'w') as outfile:
             json.dump(self.system, outfile)
 
 

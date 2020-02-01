@@ -305,10 +305,10 @@ class WindowObj2PytorchFinetuneDataParam(QtWidgets.QWidget):
 
     def forward(self):
         if self.r1.isChecked():
-            self.system["anno_type"] == "monk";
+            self.system["anno_type"] = "monk";
             self.system["batch_size"] = self.m_e4.text();
         else:
-            self.system["anno_type"] == "voc";
+            self.system["anno_type"] = "voc";
             self.system["batch_size"] = self.v_e4.text();
 
         with open('obj_2_pytorch_finetune.json', 'w') as outfile:
@@ -321,10 +321,10 @@ class WindowObj2PytorchFinetuneDataParam(QtWidgets.QWidget):
 
     def backward(self):
         if self.r1.isChecked():
-            self.system["anno_type"] == "monk";
+            self.system["anno_type"] = "monk";
             self.system["batch_size"] = self.m_e4.text();
         else:
-            self.system["anno_type"] == "voc";
+            self.system["anno_type"] = "voc";
             self.system["batch_size"] = self.v_e4.text();
 
         with open('obj_2_pytorch_finetune.json', 'w') as outfile:

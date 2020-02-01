@@ -109,60 +109,60 @@ else:
     anno_file = system["anno_file"];
 
 
+if(system["val_data"] == "yes"):
+    if(system["val_anno_type"] == "voc"):
+        val_root_dir = system["val_root_dir"];
+        val_img_dir = system["val_img_dir"];
+        val_anno_dir = system["val_anno_dir"];
 
-if(system["val_anno_type"] == "voc"):
-    val_root_dir = system["val_root_dir"];
-    val_img_dir = system["val_img_dir"];
-    val_anno_dir = system["val_anno_dir"];
+        files = os.listdir(val_root_dir + "/" + val_anno_dir);
 
-    files = os.listdir(val_root_dir + "/" + val_anno_dir);
-
-    combined = [];
-    for i in tqdm(range(len(files))):
-        annoFile = val_root_dir + "/" + val_anno_dir + "/" + files[i];
-        f = open(annoFile, 'r');
-        my_xml = f.read();
-        anno = dict(dict(xmltodict.parse(my_xml))["annotation"])
-        fname = anno["filename"];
-        label_str = "";
-        if(type(anno["object"]) == list):
-            for j in range(len(anno["object"])):
-                obj = dict(anno["object"][j]);
-                label = anno["object"][j]["name"];
-                bbox = dict(anno["object"][j]["bndbox"])
+        combined = [];
+        for i in tqdm(range(len(files))):
+            annoFile = val_root_dir + "/" + val_anno_dir + "/" + files[i];
+            f = open(annoFile, 'r');
+            my_xml = f.read();
+            anno = dict(dict(xmltodict.parse(my_xml))["annotation"])
+            fname = anno["filename"];
+            label_str = "";
+            if(type(anno["object"]) == list):
+                for j in range(len(anno["object"])):
+                    obj = dict(anno["object"][j]);
+                    label = anno["object"][j]["name"];
+                    bbox = dict(anno["object"][j]["bndbox"])
+                    x1 = bbox["xmin"];
+                    y1 = bbox["ymin"];
+                    x2 = bbox["xmax"];
+                    y2 = bbox["ymax"];
+                    if(j == len(anno["object"])-1):
+                        label_str += x1 + " " + y1 + " " + x2 + " " + y2 + " " + label;
+                    else:        
+                        label_str += x1 + " " + y1 + " " + x2 + " " + y2 + " " + label + " ";
+            else:
+                obj = dict(anno["object"]);
+                label = anno["object"]["name"];
+                bbox = dict(anno["object"]["bndbox"])
                 x1 = bbox["xmin"];
                 y1 = bbox["ymin"];
                 x2 = bbox["xmax"];
                 y2 = bbox["ymax"];
-                if(j == len(anno["object"])-1):
-                    label_str += x1 + " " + y1 + " " + x2 + " " + y2 + " " + label;
-                else:        
-                    label_str += x1 + " " + y1 + " " + x2 + " " + y2 + " " + label + " ";
-        else:
-            obj = dict(anno["object"]);
-            label = anno["object"]["name"];
-            bbox = dict(anno["object"]["bndbox"])
-            x1 = bbox["xmin"];
-            y1 = bbox["ymin"];
-            x2 = bbox["xmax"];
-            y2 = bbox["ymax"];
+                
+                label_str += x1 + " " + y1 + " " + x2 + " " + y2 + " " + label;
             
-            label_str += x1 + " " + y1 + " " + x2 + " " + y2 + " " + label;
-        
-        
-        combined.append([fname, label_str])
+            
+            combined.append([fname, label_str])
 
-    df = pd.DataFrame(combined, columns = ['ID', 'Label']);
-    df.to_csv(val_root_dir + "/train_labels.csv", index=False);
+        df = pd.DataFrame(combined, columns = ['ID', 'Label']);
+        df.to_csv(val_root_dir + "/train_labels.csv", index=False);
 
 
-    val_anno_file = "train_labels.csv";
+        val_anno_file = "train_labels.csv";
 
-else:
+    else:
 
-    val_root_dir = system["val_root_dir"];
-    val_img_dir = system["val_img_dir"];
-    val_anno_file = system["val_anno_file"];
+        val_root_dir = system["val_root_dir"];
+        val_img_dir = system["val_img_dir"];
+        val_anno_file = system["val_anno_file"];
 
 
 
@@ -174,9 +174,13 @@ else:
 
 batch_size = system["batch_size"];
 
-gtf.Dataset([root_dir, img_dir, anno_file], 
-            [val_root_dir, val_img_dir, val_anno_file], 
-            batch_size=batch_size);
+if(system["val_data"] == "yes"):
+    gtf.Dataset([root_dir, img_dir, anno_file], 
+                [val_root_dir, val_img_dir, val_anno_file], 
+                batch_size=batch_size);
+else:
+    gtf.Dataset([root_dir, img_dir, anno_file], 
+                batch_size=batch_size);
 
 
 
