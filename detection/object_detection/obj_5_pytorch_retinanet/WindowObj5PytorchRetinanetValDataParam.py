@@ -6,14 +6,14 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 
 
-class WindowObj4EfficientdetValDataParam(QtWidgets.QWidget):
+class WindowObj5PytorchRetinanetValDataParam(QtWidgets.QWidget):
 
-    backward_4_efficientdet_data_preproc = QtCore.pyqtSignal();
+    backward_5_pytorch_retinanet_data_preproc = QtCore.pyqtSignal();
     forward_model_param = QtCore.pyqtSignal();
 
     def __init__(self):
         super().__init__()
-        self.title = 'Efficient Detection - Validation Data Param'
+        self.title = 'Pytorch retinanet - Validation Data Param'
         self.left = 10
         self.top = 10
         self.width = 800
@@ -23,8 +23,8 @@ class WindowObj4EfficientdetValDataParam(QtWidgets.QWidget):
 
 
     def cfg_setup(self):
-        if(os.path.isfile("obj_4_efficientdet.json")):
-            with open('obj_4_efficientdet.json') as json_file:
+        if(os.path.isfile("obj_5_pytorch_retinanet.json")):
+            with open('obj_5_pytorch_retinanet.json') as json_file:
                 self.system = json.load(json_file)
 
 
@@ -560,7 +560,7 @@ class WindowObj4EfficientdetValDataParam(QtWidgets.QWidget):
             self.system["anno_type"] = "coco";
             self.system["batch_size"] = self.c_e4.text();
 
-        with open('obj_4_efficientdet.json', 'w') as outfile:
+        with open('obj_5_pytorch_retinanet.json', 'w') as outfile:
             json.dump(self.system, outfile)
 
 
@@ -579,10 +579,10 @@ class WindowObj4EfficientdetValDataParam(QtWidgets.QWidget):
             self.system["anno_type"] = "coco";
             self.system["batch_size"] = self.c_e4.text();
 
-        with open('obj_4_efficientdet.json', 'w') as outfile:
+        with open('obj_5_pytorch_retinanet.json', 'w') as outfile:
             json.dump(self.system, outfile)
 
-        self.backward_4_efficientdet_data_preproc.emit();
+        self.backward_5_pytorch_retinanet_data_preproc.emit();
 
 
     def monk_format(self):
@@ -662,7 +662,7 @@ class WindowObj4EfficientdetValDataParam(QtWidgets.QWidget):
 
 '''
 app = QApplication(sys.argv)
-screen = WindowObj3MxrcnnDataParam()
+screen = WindowObj5PytorchRetinanetValDataParam()
 screen.show()
 sys.exit(app.exec_())
 '''
