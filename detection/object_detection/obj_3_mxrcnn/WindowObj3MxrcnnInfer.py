@@ -234,7 +234,7 @@ class WindowObj3MxrcnnInfer(QtWidgets.QWidget):
                                                     "All Files (*)", 
                                                     options=options)
         self.system["img_file"] = fileName;
-        self.tb2.setText(fileName);
+        self.tb4.setText(fileName);
 
         self.system["model"] = self.cb1.currentText();
         self.system["use_gpu"] = self.cb3.currentText();

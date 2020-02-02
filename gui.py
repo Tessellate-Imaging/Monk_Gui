@@ -55,6 +55,15 @@ from detection.object_detection.obj_5_pytorch_retinanet.WindowObj5PytorchRetinan
 
 
 from detection.object_detection.obj_6_cornernet_lite.WindowObj6CornernetLite import WindowObj6CornernetLite
+from detection.object_detection.obj_6_cornernet_lite.WindowObj6CornernetLiteDataParam import WindowObj6CornernetLiteDataParam
+from detection.object_detection.obj_6_cornernet_lite.WindowObj6CornernetLiteValDataParam import WindowObj6CornernetLiteValDataParam
+from detection.object_detection.obj_6_cornernet_lite.WindowObj6CornernetLiteModelParam import WindowObj6CornernetLiteModelParam
+from detection.object_detection.obj_6_cornernet_lite.WindowObj6CornernetLiteHyperParam import WindowObj6CornernetLiteHyperParam
+from detection.object_detection.obj_6_cornernet_lite.WindowObj6CornernetLiteTrain import WindowObj6CornernetLiteTrain
+from detection.object_detection.obj_6_cornernet_lite.WindowObj6CornernetLiteInfer import WindowObj6CornernetLiteInfer
+
+
+
 from detection.object_detection.obj_7_yolov3.WindowObj7Yolov3 import WindowObj7Yolov3
 
 
@@ -783,17 +792,136 @@ class Controller:
 
 
 
+
+
+
     def show_obj_6_cornernet_lite(self):
         self.obj_6_cornernet_lite = WindowObj6CornernetLite();
 
+        #forward
+        self.obj_6_cornernet_lite.forward_train.connect(self.show_obj_6_cornernet_lite_data_param)
+        self.obj_6_cornernet_lite.forward_infer.connect(self.show_obj_6_cornernet_lite_infer)
+
         #backward
-        self.obj_6_cornernet_lite.backward_main.connect(self.show_detection_main);
+        self.obj_6_cornernet_lite.backward_obj.connect(self.show_detection_main);
 
         #close other 
         self.close_other_windows(self.obj_6_cornernet_lite);
 
         #show_current_window
         self.obj_6_cornernet_lite.show();
+
+
+    def show_obj_6_cornernet_lite_data_param(self):
+        self.obj_6_cornernet_lite_data_param = WindowObj6CornernetLiteDataParam();
+
+        #forward
+        self.obj_6_cornernet_lite_data_param.forward_valdata_param.connect(self.show_obj_6_cornernet_lite_valdata_param)
+
+        #backward
+        self.obj_6_cornernet_lite_data_param.backward_6_cornernet_lite.connect(self.show_obj_6_cornernet_lite);
+
+
+        #close other 
+        self.close_other_windows(self.obj_6_cornernet_lite_data_param);
+
+        #show_current_window
+        self.obj_6_cornernet_lite_data_param.show();
+
+
+    def show_obj_6_cornernet_lite_valdata_param(self):
+        self.obj_6_cornernet_lite_valdata_param = WindowObj6CornernetLiteValDataParam();
+
+        #forward
+        self.obj_6_cornernet_lite_valdata_param.forward_model_param.connect(self.show_obj_6_cornernet_lite_model_param)
+
+        #backward
+        self.obj_6_cornernet_lite_valdata_param.backward_6_cornernet_lite_data_preproc.connect(self.show_obj_6_cornernet_lite_data_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_6_cornernet_lite_valdata_param);
+
+        #show_current_window
+        self.obj_6_cornernet_lite_valdata_param.show();
+
+
+    def show_obj_6_cornernet_lite_model_param(self):
+        self.obj_6_cornernet_lite_model_param = WindowObj6CornernetLiteModelParam();
+
+        #forward
+        self.obj_6_cornernet_lite_model_param.forward_hyper_param.connect(self.show_obj_6_cornernet_lite_hyper_param);
+
+        #backward
+        self.obj_6_cornernet_lite_model_param.backward_6_cornernet_lite_valdata_param.connect(self.show_obj_6_cornernet_lite_valdata_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_6_cornernet_lite_model_param);
+
+        #show_current_window
+        self.obj_6_cornernet_lite_model_param.show();
+
+
+    def show_obj_6_cornernet_lite_hyper_param(self):
+        self.obj_6_cornernet_lite_hyper_param = WindowObj6CornernetLiteHyperParam();
+
+        #forward
+        self.obj_6_cornernet_lite_hyper_param.forward_train.connect(self.show_obj_6_cornernet_lite_train)
+
+        #backward
+        self.obj_6_cornernet_lite_hyper_param.backward_model_param.connect(self.show_obj_6_cornernet_lite_model_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_6_cornernet_lite_hyper_param);
+
+        #show_current_window
+        self.obj_6_cornernet_lite_hyper_param.show();
+
+
+    def show_obj_6_cornernet_lite_train(self):
+        self.obj_6_cornernet_lite_train = WindowObj6CornernetLiteTrain();
+
+        #forward
+        self.obj_6_cornernet_lite_train.forward_6_cornernet_lite.connect(self.show_obj_6_cornernet_lite)
+
+        #backward
+        self.obj_6_cornernet_lite_train.backward_hyper_param.connect(self.show_obj_6_cornernet_lite_hyper_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_6_cornernet_lite_train);
+
+        #show_current_window
+        self.obj_6_cornernet_lite_train.show();
+
+
+    def show_obj_6_cornernet_lite_infer(self):
+        self.obj_6_cornernet_lite_infer = WindowObj6CornernetLiteInfer();
+
+        #backward
+        self.obj_6_cornernet_lite_infer.backward_6_cornernet_lite.connect(self.show_obj_6_cornernet_lite);
+
+
+        #close other 
+        self.close_other_windows(self.obj_6_cornernet_lite_infer);
+
+        #show_current_window
+        self.obj_6_cornernet_lite_infer.show();
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

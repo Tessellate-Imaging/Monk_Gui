@@ -169,7 +169,7 @@ class WindowObj4EfficientdetInfer(QtWidgets.QWidget):
                                                     "All Files (*)", 
                                                     options=options)
         self.system["img_file"] = fileName;
-        self.tb2.setText(fileName);
+        self.tb4.setText(fileName);
 
         self.system["use_gpu"] = self.cb3.currentText();
         self.system["conf_thresh"] = self.e4.text();

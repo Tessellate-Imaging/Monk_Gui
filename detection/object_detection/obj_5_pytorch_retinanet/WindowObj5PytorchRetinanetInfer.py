@@ -157,7 +157,7 @@ class WindowObj5PytorchRetinanetInfer(QtWidgets.QWidget):
                                                     "All Files (*)", 
                                                     options=options)
         self.system["img_file"] = fileName;
-        self.tb2.setText(fileName);
+        self.tb4.setText(fileName);
 
         self.system["conf_thresh"] = self.e4.text();
 
