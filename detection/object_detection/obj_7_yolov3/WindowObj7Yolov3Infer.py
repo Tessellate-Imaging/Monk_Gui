@@ -246,8 +246,9 @@ class WindowObj7Yolov3Infer(QtWidgets.QWidget):
 
 
 
-
+'''
 app = QApplication(sys.argv)
 screen = WindowObj7Yolov3Infer()
 screen.show()
 sys.exit(app.exec_())
+'''
