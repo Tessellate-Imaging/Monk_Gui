@@ -161,23 +161,23 @@ class WindowObj5PytorchRetinanetTrain(QtWidgets.QWidget):
             wr += "Img Dir -    {}\n".format(self.system["coco_img_dir"]);
 
         if(self.system["val_data"] == "yes"):
-            if(self.system["anno_type"] == "monk"):
+            if(self.system["val_anno_type"] == "monk"):
                 wr += "Root Dir -   {}\n".format(self.system["val_monk_root_dir"]);
-            elif(self.system["anno_type"] == "voc"):
+            elif(self.system["val_anno_type"] == "voc"):
                 wr += "Root Dir -   {}\n".format(self.system["val_voc_root_dir"]);
             else:
                 wr += "Root Dir -   {}\n".format(self.system["val_coco_root_dir"]);
 
-            if(self.system["anno_type"] == "monk"):
+            if(self.system["val_anno_type"] == "monk"):
                 wr += "Anno Dir -   {}\n".format(self.system["val_monk_anno_file"]);
-            elif(self.system["anno_type"] == "voc"):
+            elif(self.system["val_anno_type"] == "voc"):
                 wr += "Anno File -  {}\n".format(self.system["val_voc_anno_dir"]);
             else:
                 wr += "Coco Dir -   {}\n".format(self.system["val_coco_coco_dir"]);
 
-            if(self.system["anno_type"] == "monk"):
+            if(self.system["val_anno_type"] == "monk"):
                 wr += "Img Dir -    {}\n".format(self.system["val_monk_img_dir"]);
-            elif(self.system["anno_type"] == "voc"):
+            elif(self.system["val_anno_type"] == "voc"):
                 wr += "Img Dir -    {}\n".format(self.system["val_voc_img_dir"]);
             else:
                 wr += "Img Dir -    {}\n".format(self.system["val_coco_img_dir"]);

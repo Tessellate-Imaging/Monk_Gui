@@ -65,6 +65,12 @@ from detection.object_detection.obj_6_cornernet_lite.WindowObj6CornernetLiteInfe
 
 
 from detection.object_detection.obj_7_yolov3.WindowObj7Yolov3 import WindowObj7Yolov3
+from detection.object_detection.obj_7_yolov3.WindowObj7Yolov3DataParam import WindowObj7Yolov3DataParam
+from detection.object_detection.obj_7_yolov3.WindowObj7Yolov3ValDataParam import WindowObj7Yolov3ValDataParam
+from detection.object_detection.obj_7_yolov3.WindowObj7Yolov3ModelParam import WindowObj7Yolov3ModelParam
+from detection.object_detection.obj_7_yolov3.WindowObj7Yolov3HyperParam import WindowObj7Yolov3HyperParam
+from detection.object_detection.obj_7_yolov3.WindowObj7Yolov3Train import WindowObj7Yolov3Train
+from detection.object_detection.obj_7_yolov3.WindowObj7Yolov3Infer import WindowObj7Yolov3Infer
 
 
 
@@ -928,8 +934,12 @@ class Controller:
     def show_obj_7_yolov3(self):
         self.obj_7_yolov3 = WindowObj7Yolov3();
 
+        #forward
+        self.obj_7_yolov3.forward_train.connect(self.show_obj_7_yolov3_data_param)
+        self.obj_7_yolov3.forward_infer.connect(self.show_obj_7_yolov3_infer)
+
         #backward
-        self.obj_7_yolov3.backward_main.connect(self.show_detection_main);
+        self.obj_7_yolov3.backward_obj.connect(self.show_detection_main);
 
         #close other 
         self.close_other_windows(self.obj_7_yolov3);
@@ -937,7 +947,108 @@ class Controller:
         #show_current_window
         self.obj_7_yolov3.show();
 
-           
+
+    def show_obj_7_yolov3_data_param(self):
+        self.obj_7_yolov3_data_param = WindowObj7Yolov3DataParam();
+
+        #forward
+        self.obj_7_yolov3_data_param.forward_valdata_param.connect(self.show_obj_7_yolov3_valdata_param)
+
+        #backward
+        self.obj_7_yolov3_data_param.backward_7_yolov3.connect(self.show_obj_7_yolov3);
+
+
+        #close other 
+        self.close_other_windows(self.obj_7_yolov3_data_param);
+
+        #show_current_window
+        self.obj_7_yolov3_data_param.show();
+
+
+    def show_obj_7_yolov3_valdata_param(self):
+        self.obj_7_yolov3_valdata_param = WindowObj7Yolov3ValDataParam();
+
+        #forward
+        self.obj_7_yolov3_valdata_param.forward_model_param.connect(self.show_obj_7_yolov3_model_param)
+
+        #backward
+        self.obj_7_yolov3_valdata_param.backward_7_yolov3_data_preproc.connect(self.show_obj_7_yolov3_data_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_7_yolov3_valdata_param);
+
+        #show_current_window
+        self.obj_7_yolov3_valdata_param.show();
+
+
+    def show_obj_7_yolov3_model_param(self):
+        self.obj_7_yolov3_model_param = WindowObj7Yolov3ModelParam();
+
+        #forward
+        self.obj_7_yolov3_model_param.forward_hyper_param.connect(self.show_obj_7_yolov3_hyper_param);
+
+        #backward
+        self.obj_7_yolov3_model_param.backward_7_yolov3_valdata_param.connect(self.show_obj_7_yolov3_valdata_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_7_yolov3_model_param);
+
+        #show_current_window
+        self.obj_7_yolov3_model_param.show();
+
+
+    def show_obj_7_yolov3_hyper_param(self):
+        self.obj_7_yolov3_hyper_param = WindowObj7Yolov3HyperParam();
+
+        #forward
+        self.obj_7_yolov3_hyper_param.forward_train.connect(self.show_obj_7_yolov3_train)
+
+        #backward
+        self.obj_7_yolov3_hyper_param.backward_model_param.connect(self.show_obj_7_yolov3_model_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_7_yolov3_hyper_param);
+
+        #show_current_window
+        self.obj_7_yolov3_hyper_param.show();
+
+
+    def show_obj_7_yolov3_train(self):
+        self.obj_7_yolov3_train = WindowObj7Yolov3Train();
+
+        #forward
+        self.obj_7_yolov3_train.forward_7_yolov3.connect(self.show_obj_7_yolov3)
+
+        #backward
+        self.obj_7_yolov3_train.backward_hyper_param.connect(self.show_obj_7_yolov3_hyper_param);
+
+
+        #close other 
+        self.close_other_windows(self.obj_7_yolov3_train);
+
+        #show_current_window
+        self.obj_7_yolov3_train.show();
+
+
+    def show_obj_7_yolov3_infer(self):
+        self.obj_7_yolov3_infer = WindowObj7Yolov3Infer();
+
+        #backward
+        self.obj_7_yolov3_infer.backward_7_yolov3.connect(self.show_obj_7_yolov3);
+
+
+        #close other 
+        self.close_other_windows(self.obj_7_yolov3_infer);
+
+        #show_current_window
+        self.obj_7_yolov3_infer.show();
+
+
+
+
 
 
 

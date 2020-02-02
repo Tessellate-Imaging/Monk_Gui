@@ -29,6 +29,7 @@ class WindowObj5PytorchRetinanetDataParam(QtWidgets.QWidget):
         else:
             self.system = {};
             self.system["anno_type"] = "monk"
+            self.system["val_anno_type"] = "monk"
 
             self.system["monk_root_dir"] = "Monk_Object_Detection/example_notebooks/sample_dataset/kangaroo/";
             self.system["monk_img_dir"] = "Images";

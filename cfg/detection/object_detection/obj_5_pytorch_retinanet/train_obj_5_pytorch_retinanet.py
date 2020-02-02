@@ -355,7 +355,7 @@ else:
 
 
 if(system["val_data"] == "yes"):
-    if(system["anno_type"] == "monk"):
+    if(system["val_anno_type"] == "monk"):
         val_root_dir = system["val_monk_root_dir"];
         val_img_dir = system["val_monk_img_dir"];
         anno_file = system["val_monk_anno_file"];
@@ -468,7 +468,7 @@ if(system["val_data"] == "yes"):
         val_set_dir = system["val_monk_img_dir"];
 
 
-    elif(system["anno_type"] == "voc"):
+    elif(system["val_anno_type"] == "voc"):
         val_root_dir = system["val_voc_root_dir"];
         val_img_dir = system["val_voc_img_dir"];
         anno_dir = system["val_voc_anno_dir"];

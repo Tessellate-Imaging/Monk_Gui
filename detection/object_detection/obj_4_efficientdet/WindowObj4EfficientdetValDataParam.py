@@ -71,21 +71,21 @@ class WindowObj4EfficientdetValDataParam(QtWidgets.QWidget):
 
         
         self.r1 = QRadioButton("Monk format", self)
-        if self.system["anno_type"] == "monk":
+        if self.system["val_anno_type"] == "monk":
             self.r1.setChecked(True)
         self.r1.move(430,60)
         self.r1.toggled.connect(self.monk);
         self.wid.append(self.r1);
 
         self.r2 = QRadioButton("VOC format", self)
-        if self.system["anno_type"] == "voc":
+        if self.system["val_anno_type"] == "voc":
             self.r2.setChecked(True)
         self.r2.move(560,60)
         self.r2.toggled.connect(self.voc);
         self.wid.append(self.r2);
 
         self.r3 = QRadioButton("COCO format", self)
-        if self.system["anno_type"] == "coco":
+        if self.system["val_anno_type"] == "coco":
             self.r3.setChecked(True)
         self.r3.move(670,60)
         self.r3.toggled.connect(self.coco);
@@ -371,9 +371,9 @@ class WindowObj4EfficientdetValDataParam(QtWidgets.QWidget):
 
     
 
-        if self.system["anno_type"] == "monk":
+        if self.system["val_anno_type"] == "monk":
             self.monk();
-        elif self.system["anno_type"] == "voc":
+        elif self.system["val_anno_type"] == "voc":
             self.voc();
         else:
             self.coco();
@@ -389,9 +389,9 @@ class WindowObj4EfficientdetValDataParam(QtWidgets.QWidget):
             for x in self.wid:
                 x.show();
             self.system["val_data"] = "yes";
-            if self.system["anno_type"] == "monk":
+            if self.system["val_anno_type"] == "monk":
                 self.monk();
-            elif self.system["anno_type"] == "voc":
+            elif self.system["val_anno_type"] == "voc":
                 self.voc();
             else:
                 self.coco();
@@ -409,7 +409,7 @@ class WindowObj4EfficientdetValDataParam(QtWidgets.QWidget):
         
 
     def monk(self):
-        self.system["anno_type"] = "monk";
+        self.system["val_anno_type"] = "monk";
         self.tb1.setText(self.monk_format());
         for x in self.m:
             x.show();
@@ -420,7 +420,7 @@ class WindowObj4EfficientdetValDataParam(QtWidgets.QWidget):
 
 
     def voc(self):
-        self.system["anno_type"] = "voc";
+        self.system["val_anno_type"] = "voc";
         self.tb1.setText(self.voc_format());
         for x in self.m:
             x.hide();
@@ -431,7 +431,7 @@ class WindowObj4EfficientdetValDataParam(QtWidgets.QWidget):
 
 
     def coco(self):
-        self.system["anno_type"] = "coco";
+        self.system["val_anno_type"] = "coco";
         self.tb1.setText(self.coco_format());
         for x in self.m:
             x.hide();
@@ -551,13 +551,13 @@ class WindowObj4EfficientdetValDataParam(QtWidgets.QWidget):
 
     def forward(self):
         if self.r1.isChecked():
-            self.system["anno_type"] = "monk";
+            self.system["val_anno_type"] = "monk";
             self.system["batch_size"] = self.m_e4.text();
         elif self.r2.isChecked():
-            self.system["anno_type"] = "voc";
+            self.system["val_anno_type"] = "voc";
             self.system["batch_size"] = self.v_e4.text();
         else:
-            self.system["anno_type"] = "coco";
+            self.system["val_anno_type"] = "coco";
             self.system["batch_size"] = self.c_e4.text();
 
         with open('obj_4_efficientdet.json', 'w') as outfile:
@@ -570,13 +570,13 @@ class WindowObj4EfficientdetValDataParam(QtWidgets.QWidget):
 
     def backward(self):
         if self.r1.isChecked():
-            self.system["anno_type"] = "monk";
+            self.system["val_anno_type"] = "monk";
             self.system["batch_size"] = self.m_e4.text();
         elif self.r2.isChecked():
-            self.system["anno_type"] = "voc";
+            self.system["val_anno_type"] = "voc";
             self.system["batch_size"] = self.v_e4.text();
         else:
-            self.system["anno_type"] = "coco";
+            self.system["val_anno_type"] = "coco";
             self.system["batch_size"] = self.c_e4.text();
 
         with open('obj_4_efficientdet.json', 'w') as outfile:

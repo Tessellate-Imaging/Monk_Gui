@@ -29,6 +29,7 @@ class WindowObj2PytorchFinetuneDataParam(QtWidgets.QWidget):
         else:
             self.system = {};
             self.system["anno_type"] = "monk"
+
             self.system["root_dir"] = "Monk_Object_Detection/example_notebooks/sample_dataset/kangaroo/";
             self.system["img_dir"] = "Images";
             self.system["anno_file"] = "train_labels.csv";
