@@ -1,4 +1,4 @@
-# Monk_Gui [![HitCount](http://hits.dwyl.io/Tessellate-Imaging/Monk_Gui.svg)](http://hits.dwyl.io/Tessellate-Imaging/Monk_Gui) ![Total Line of Code](https://tokei.rs/b1/github/Tessellate-Imaging/Monk_Gui) ![Total Files](https://tokei.rs/b1/github/Tessellate-Imaging/Monk_Gui?category=files)
+# Monk_Gui [![HitCount](http://hits.dwyl.io/Tessellate-Imaging/Monk_Gui.svg)](http://hits.dwyl.io/Tessellate-Imaging/Monk_Gui) ![](https://tokei.rs/b1/github/Tessellate-Imaging/Monk_Gui) ![](https://tokei.rs/b1/github/Tessellate-Imaging/Monk_Gui?category=files)
 
 A Graphical user Interface for deep learning and computer vision over Monk Libraries
 <br />
