@@ -121,6 +121,7 @@ class WindowDetectionMain(QtWidgets.QWidget):
             self.process.setProcessChannelMode(QtCore.QProcess.MergedChannels)
             self.process.readyReadStandardOutput.connect(self.stdoutReady)
             self.process.readyReadStandardError.connect(self.stderrReady)
+            self.process.finished.connect(self.finished)
 
             self.process.start('git clone https://github.com/Tessellate-Imaging/Monk_Object_Detection.git')
         else:
@@ -135,6 +136,10 @@ class WindowDetectionMain(QtWidgets.QWidget):
             self.b1.setText("Next")
         self.append(text)
 
+    def finished(self):
+        self.b1.setEnabled(True)
+        self.b1.setText("Next")
+        self.te1.setText("Monk Detection Library Cloned.");  
 
     def stderrReady(self):
         text = str(self.process.readAllStandardError().data(), encoding='utf-8')
