@@ -40,7 +40,7 @@ A Graphical user Interface for deep learning and computer vision over Monk Libra
 
 ` $ mkvirtualenv -p /usr/bin/python3.6 monk_gui`
 
-` $ workon monk_gui && pip install numpy pyqt5 tqdm`
+` $ workon monk_gui && pip install numpy pyqt5 tqdm matplotlib pillow`
 <br />
 <br />
 <br />
