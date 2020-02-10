@@ -73,6 +73,21 @@ from detection.object_detection.obj_7_yolov3.WindowObj7Yolov3Train import Window
 from detection.object_detection.obj_7_yolov3.WindowObj7Yolov3Infer import WindowObj7Yolov3Infer
 
 
+from classification.project.WindowClassificationProjectMain import WindowClassificationProjectMain
+from classification.project.WindowClassificationExperimentMain import WindowClassificationExperimentMain
+from classification.project.WindowClassificationExperimentRunMode import WindowClassificationExperimentRunMode
+
+from classification.training.quick.WindowClassificationTrainQuickDataParam import WindowClassificationTrainQuickDataParam
+from classification.training.quick.WindowClassificationTrainQuickModelParam import WindowClassificationTrainQuickModelParam
+from classification.training.quick.WindowClassificationTrainQuickTrain import WindowClassificationTrainQuickTrain
+
+from classification.infer.quick.WindowClassificationInferQuick import WindowClassificationInferQuick
+
+from classification.validate.quick.WindowClassificationValidateQuick import WindowClassificationValidateQuick
+
+from classification.comparison.WindowClassificationComparisonCurrent import WindowClassificationComparisonCurrent
+
+
 
 class WindowMain(QtWidgets.QWidget):
 
@@ -153,6 +168,9 @@ class Controller:
 
     def show_classification_main(self):
         self.window_classification_main = WindowClassificationMain();
+
+        #forward
+        self.window_classification_main.forward_project.connect(self.show_cls_project_main)
 
         #backward
         self.window_classification_main.backward_main.connect(self.show_main);
@@ -1049,6 +1067,148 @@ class Controller:
 
 
 
+
+
+
+
+
+    def show_cls_project_main(self):
+        self.cls_project_main = WindowClassificationProjectMain();
+
+        #forward
+        self.cls_project_main.forward_experiment.connect(self.show_cls_experiment_main);
+        self.cls_project_main.forward_compare_current.connect(self.show_cls_comparison_current);
+        self.cls_project_main.forward_copy_experiment.connect(self.show_cls_experiment_run_mode);
+
+        #backward
+        self.cls_project_main.backward_classification_main.connect(self.show_classification_main);
+
+        #close other 
+        self.close_other_windows(self.cls_project_main);
+
+        #show_current_window
+        self.cls_project_main.show();
+
+
+    def show_cls_experiment_main(self):
+        self.cls_experiment_main = WindowClassificationExperimentMain();
+
+        #forward
+        self.cls_experiment_main.forward_run_mode.connect(self.show_cls_experiment_run_mode)
+        self.cls_experiment_main.forward_infer.connect(self.show_cls_quick_infer)
+        self.cls_experiment_main.forward_validate.connect(self.show_cls_quick_validate)
+
+        #backward
+        self.cls_experiment_main.backward_project_main.connect(self.show_cls_project_main);
+
+        #close other 
+        self.close_other_windows(self.cls_experiment_main);
+
+        #show_current_window
+        self.cls_experiment_main.show();
+
+
+    def show_cls_experiment_run_mode(self):
+        self.cls_experiment_run_mode = WindowClassificationExperimentRunMode();
+
+        #forward
+        self.cls_experiment_run_mode.forward_data_param.connect(self.show_cls_quick_train_data_param)
+
+        #backward
+        self.cls_experiment_run_mode.backward_experiment_main.connect(self.show_cls_experiment_main);
+
+        #close other 
+        self.close_other_windows(self.cls_experiment_run_mode);
+
+        #show_current_window
+        self.cls_experiment_run_mode.show();
+
+
+    def show_cls_quick_train_data_param(self):
+        self.cls_quick_train_data_param = WindowClassificationTrainQuickDataParam();
+
+        #forward
+        self.cls_quick_train_data_param.forward_model_param.connect(self.show_cls_quick_train_model_param)
+
+        #backward
+        self.cls_quick_train_data_param.backward_experiment_run_mode.connect(self.show_cls_experiment_run_mode);
+
+        #close other 
+        self.close_other_windows(self.cls_quick_train_data_param);
+
+        #show_current_window
+        self.cls_quick_train_data_param.show();
+
+
+    def show_cls_quick_train_model_param(self):
+        self.cls_quick_train_model_param = WindowClassificationTrainQuickModelParam();
+
+        #forward
+        self.cls_quick_train_model_param.forward_train.connect(self.show_cls_quick_train)
+
+        #backward
+        self.cls_quick_train_model_param.backward_data_param.connect(self.show_cls_quick_train_data_param);
+
+        #close other 
+        self.close_other_windows(self.cls_quick_train_model_param);
+
+        #show_current_window
+        self.cls_quick_train_model_param.show();
+
+
+    def show_cls_quick_train(self):
+        self.cls_quick_train = WindowClassificationTrainQuickTrain();
+
+        #forward
+        self.cls_quick_train.forward_infer.connect(self.show_cls_experiment_main)
+
+        #backward
+        self.cls_quick_train.backward_model_param.connect(self.show_cls_quick_train_model_param);
+
+        #close other 
+        self.close_other_windows(self.cls_quick_train);
+
+        #show_current_window
+        self.cls_quick_train.show();
+
+
+    def show_cls_quick_infer(self):
+        self.cls_quick_infer = WindowClassificationInferQuick();
+
+        #backward
+        self.cls_quick_infer.backward_exp.connect(self.show_cls_experiment_main);
+
+        #close other 
+        self.close_other_windows(self.cls_quick_infer);
+
+        #show_current_window
+        self.cls_quick_infer.show();
+
+
+    def show_cls_quick_validate(self):
+        self.cls_quick_validate = WindowClassificationValidateQuick();
+
+        #backward
+        self.cls_quick_validate.backward_exp.connect(self.show_cls_experiment_main);
+
+        #close other 
+        self.close_other_windows(self.cls_quick_validate);
+
+        #show_current_window
+        self.cls_quick_validate.show();
+
+
+    def show_cls_comparison_current(self):
+        self.cls_comparison_current = WindowClassificationComparisonCurrent();
+
+        #backward
+        self.cls_comparison_current.backward_csl_main.connect(self.show_cls_project_main);
+
+        #close other 
+        self.close_other_windows(self.cls_comparison_current);
+
+        #show_current_window
+        self.cls_comparison_current.show();
 
 
 
