@@ -5,8 +5,6 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 
-lst = [u"D", u"E", u"EF", u"F", u"FG", u"G", u"H", u"JS", u"J", u"K", u"M", u"P", u"R", u"S", u"T", u"U", u"V", u"X", u"Y", u"Z"]
-
 
 class WindowClassificationExperimentRunMode(QtWidgets.QWidget):
 
@@ -51,20 +49,14 @@ class WindowClassificationExperimentRunMode(QtWidgets.QWidget):
 
 
         self.r1 = QRadioButton("Quick Mode", self)
-        if self.system["mode"] == "quick":
-            self.r1.setChecked(True)
         self.r1.move(20, 20)
         self.r1.toggled.connect(self.quick);
 
         self.r2 = QRadioButton("Update Mode", self)
-        if self.system["mode"] == "update":
-            self.r2.setChecked(True)
         self.r2.move(220, 20)
         self.r2.toggled.connect(self.update);
 
         self.r3 = QRadioButton("Expert Mode", self)
-        if self.system["mode"] == "expert":
-            self.r3.setChecked(True)
         self.r3.move(420, 20)
         self.r3.toggled.connect(self.expert);
         
@@ -74,15 +66,28 @@ class WindowClassificationExperimentRunMode(QtWidgets.QWidget):
         self.tb1.setText("");
         self.tb1.resize(500, 390)
         self.tb1.setReadOnly(True)
-        self.quick();
+        
+        if self.system["mode"] == "quick":
+            self.r1.setChecked(True)
+            self.quick();
+        elif self.system["mode"] == "update":
+            self.r2.setChecked(True)
+            self.update();
+        elif self.system["mode"] == "expert":
+            self.r3.setChecked(True)
+            self.expert();
 
 
 
     def quick(self):
         wr = "";
+        wr += "Information\n";
+        wr += "1. Desgined with default values of hyper-parameters\n";
+        wr += "2. Only few modifiable parameters.\n\n";
         wr += "Use Case\n";
         wr += "1. Quick prototyping\n"
-        wr += "2. Transfer learning\n\n"
+        wr += "2. Transfer learning\n"
+        wr += "3. Good starting point in this field\n";
         wr += "Modifiable Elements\n";
         wr += "1. Dataset\n";
         wr += "2. Transfer learning base model\n";
@@ -98,6 +103,34 @@ class WindowClassificationExperimentRunMode(QtWidgets.QWidget):
 
     def update(self):
         wr = "";
+        wr += "In Development\n\n\n";
+        wr += "Information\n";
+        wr += "1. Desgined with default, yet updatable values of hyper-parameters\n\n";
+        wr += "Use Case\n";
+        wr += "1. Quick prototyping and debugging parameters\n"
+        wr += "2. Transfer learning or build custom CNNs \n"
+        wr += "3. For understanding role of hyper-parameters in deep learning\n\n";
+        wr += "Modifiable Elements\n";
+        wr += "1. Dataset\n";
+        wr += "2. Dataset params - \n";
+        wr += "    - Data input size\n";
+        wr += "    - Batch size\n";
+        wr += "    - Data shuffling\n";
+        wr += "    - Num CPU processors\n";
+        wr += "    - Train-Val Split\n";
+        wr += "3. Data Transformations\n";
+        wr += "4. Transfer learning base model or build custom CNNs\n";
+        wr += "5. Model params\n";
+        wr += "    - Use Gpu/Cpu\n";
+        wr += "    - Use pretrained weights or not\n";
+        wr += "    - Freeze Base network or not\n";
+        wr += "    - Freeze certain layers in network\n";
+        wr += "6. Append layers to transfer learning model\n";
+        wr += "7. Loss functions\n";
+        wr += "8. Optimizers\n";
+        wr += "9. Schedulers\n";
+        wr += "10. Epochs\n\n"
+
         self.tb1.setText(wr);
 
         self.system["mode"] = "update";
@@ -106,7 +139,7 @@ class WindowClassificationExperimentRunMode(QtWidgets.QWidget):
 
 
     def expert(self):
-        wr = "";
+        wr = "Development yet to start";
         self.tb1.setText(wr);
 
         self.system["mode"] = "expert";
@@ -127,9 +160,8 @@ class WindowClassificationExperimentRunMode(QtWidgets.QWidget):
         self.backward_experiment_main.emit();
 
 
-'''
+
 app = QApplication(sys.argv)
 screen = WindowClassificationExperimentRunMode()
 screen.show()
 sys.exit(app.exec_())
-'''
