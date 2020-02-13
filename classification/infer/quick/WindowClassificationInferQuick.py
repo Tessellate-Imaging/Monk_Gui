@@ -39,12 +39,12 @@ class WindowClassificationInferQuick(QtWidgets.QWidget):
 
         # Backward
         self.b1 = QPushButton('Back', self)
-        self.b1.move(700,550)
+        self.b1.move(700,560)
         self.b1.clicked.connect(self.backward)
 
         # Quit
         self.bclose = QPushButton('Quit', self)
-        self.bclose.move(800,550)
+        self.bclose.move(800,560)
         self.bclose.clicked.connect(self.close)
 
         self.createLayout_group_datatype();
@@ -122,17 +122,46 @@ class WindowClassificationInferQuick(QtWidgets.QWidget):
         self.image_single_label.append(self.b6);
 
 
-        self.l7 = QLabel(self);
-        self.l7.setText("Predictions");
-        self.l7.move(480, 440);
-        self.image_single_label.append(self.l7)
+        self.l7_1 = QLabel(self);
+        self.l7_1.setText("Img_Name: ");
+        self.l7_1.move(480, 440);
+        self.image_single_label.append(self.l7_1)
 
 
-        self.tb7 = QTextEdit(self)
-        self.tb7.move(570, 440)
-        self.tb7.resize(300, 80)
-        self.tb7.setReadOnly(True)
-        self.image_single_label.append(self.tb4)
+        self.tb7_1 = QTextEdit(self)
+        self.tb7_1.move(570, 440)
+        self.tb7_1.resize(300, 30)
+        self.tb7_1.setReadOnly(True)
+        self.image_single_label.append(self.tb7_1)
+
+
+        self.l7_2 = QLabel(self);
+        self.l7_2.setText("Type: ");
+        self.l7_2.move(500, 480);
+        self.image_single_label.append(self.l7_2)
+
+
+        self.tb7_2 = QTextEdit(self)
+        self.tb7_2.move(570, 480)
+        self.tb7_2.resize(300, 30)
+        self.tb7_2.setReadOnly(True)
+        self.image_single_label.append(self.tb7_2)
+
+
+        self.l7_3 = QLabel(self);
+        self.l7_3.setText("Probability: ");
+        self.l7_3.move(480, 520);
+        self.image_single_label.append(self.l7_3)
+
+
+        self.tb7_3 = QTextEdit(self)
+        self.tb7_3.move(570, 520)
+        self.tb7_3.resize(300, 30)
+        self.tb7_3.setReadOnly(True)
+        self.image_single_label.append(self.tb7_3)
+
+
+
 
 
 
@@ -160,7 +189,9 @@ class WindowClassificationInferQuick(QtWidgets.QWidget):
     def previous(self):
         self.b6.setEnabled(True);
         self.index -= 1;
-        self.tb7.setText(str(self.data[str(self.index)]));
+        self.tb7_1.setText(str(self.data[str(self.index)]["img_name"]));
+        self.tb7_2.setText(str(self.data[str(self.index)]["predicted_class"]));
+        self.tb7_3.setText(str(self.data[str(self.index)]["score"]));
         pixmap = QPixmap(self.img_list[self.index])
         pixmap = pixmap.scaledToWidth(400)
         pixmap = pixmap.scaledToHeight(300)
@@ -172,7 +203,9 @@ class WindowClassificationInferQuick(QtWidgets.QWidget):
     def next(self):
         self.b5.setEnabled(True);
         self.index += 1;
-        self.tb7.setText(str(self.data[str(self.index)]));
+        self.tb7_1.setText(str(self.data[str(self.index)]["img_name"]));
+        self.tb7_2.setText(str(self.data[str(self.index)]["predicted_class"]));
+        self.tb7_3.setText(str(self.data[str(self.index)]["score"]));
         pixmap = QPixmap(self.img_list[self.index])
         pixmap = pixmap.scaledToWidth(400)
         pixmap = pixmap.scaledToHeight(300)
@@ -373,7 +406,9 @@ class WindowClassificationInferQuick(QtWidgets.QWidget):
                 self.index = 0;
                 with open('output.json') as json_file:
                     self.data = json.load(json_file)
-                self.tb7.setText(str(self.data[str(self.index)]));
+                self.tb7_1.setText(str(self.data[str(self.index)]["img_name"]));
+                self.tb7_2.setText(str(self.data[str(self.index)]["predicted_class"]));
+                self.tb7_3.setText(str(self.data[str(self.index)]["score"]));
                 QMessageBox.about(self, "Prediction Status", "Completed");
                 pixmap = QPixmap(self.img_list[self.index])
                 pixmap = pixmap.scaledToWidth(400)
@@ -387,7 +422,9 @@ class WindowClassificationInferQuick(QtWidgets.QWidget):
                 self.l6.setPixmap(pixmap)
                 with open('output.json') as json_file:
                     data = json.load(json_file)
-                self.tb7.setText(str(data));
+                self.tb7_1.setText(str(data["img_name"].split("/")[-1]));
+                self.tb7_2.setText(str(data["predicted_class"]));
+                self.tb7_3.setText(str(data["score"]));
 
         self.append(text)
 
