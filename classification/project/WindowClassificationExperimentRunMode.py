@@ -160,8 +160,9 @@ class WindowClassificationExperimentRunMode(QtWidgets.QWidget):
         self.backward_experiment_main.emit();
 
 
-
+'''
 app = QApplication(sys.argv)
 screen = WindowClassificationExperimentRunMode()
 screen.show()
 sys.exit(app.exec_())
+'''
