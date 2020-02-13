@@ -69,13 +69,13 @@ if(system["structuretype"] == "foldered"):
                     num_epochs=system["epochs"]);
 else:
     if(system["val"]):
-        ptf.Default(dataset_path=[system["traindata"]["dir"], system["valdata"]["dir"]], 
+        ptf.Default(dataset_path=[system["traindata"]["cdir"], system["valdata"]["cdir"]], 
                     path_to_csv=[system["traindata"]["csv"], system["valdata"]["csv"]],
                     model_name=system["model"], 
                     freeze_base_network=system["freeze_base_model"], 
                     num_epochs=system["epochs"]);
     else:
-        ptf.Default(dataset_path=system["traindata"]["dir"], 
+        ptf.Default(dataset_path=system["traindata"]["cdir"], 
                     path_to_csv=system["traindata"]["csv"],
                     model_name=system["model"], 
                     freeze_base_network=system["freeze_base_model"], 

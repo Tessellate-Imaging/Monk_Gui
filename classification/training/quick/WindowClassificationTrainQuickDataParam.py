@@ -266,6 +266,10 @@ class WindowClassificationTrainQuickDataParam(QtWidgets.QWidget):
                 self.isc_b4.setEnabled(True);
                 self.isc_tb4.setEnabled(True);
 
+        with open('base_classification.json', 'w') as outfile:
+            json.dump(self.system, outfile)
+
+
 
 
     def select_train_dataset(self):
@@ -280,6 +284,7 @@ class WindowClassificationTrainQuickDataParam(QtWidgets.QWidget):
             self.isc_b1.setText("Selected");
             self.isc_tb1.setText(folderName);
             self.system["traindata"]["cdir"] = folderName;
+            print("In here");
 
         with open('base_classification.json', 'w') as outfile:
             json.dump(self.system, outfile)

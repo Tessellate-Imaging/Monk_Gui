@@ -317,14 +317,16 @@ class WindowClassificationExperimentMain(QtWidgets.QWidget):
         with open("workspace/" + self.system["project"] + "/" + self.system["experiment"] + "/experiment_state.json") as json_file:
             data = json.load(json_file)
         wr = "";
-        tmp = np.load(data["training"]["outputs"]["log_train_acc_history_relative"], allow_pickle=True);
-        wr += "Train acc - {}\n".format(tmp[-1]);
-        tmp = np.load(data["training"]["outputs"]["log_val_acc_history_relative"], allow_pickle=True);
-        wr += "Val acc - {}\n".format(tmp[-1]);
-        tmp = np.load(data["training"]["outputs"]["log_train_loss_history_relative"], allow_pickle=True);
-        wr += "Train loss - {}\n".format(tmp[-1]);
-        tmp = np.load(data["training"]["outputs"]["log_val_loss_history_relative"], allow_pickle=True);
-        wr += "Val losss - {}\n".format(tmp[-1]);
+        if(data["training"]["status"]):
+            tmp = np.load(data["training"]["outputs"]["log_train_acc_history_relative"], allow_pickle=True);
+            wr += "Train acc - {}\n".format(tmp[-1]);
+            tmp = np.load(data["training"]["outputs"]["log_val_acc_history_relative"], allow_pickle=True);
+            wr += "Val acc - {}\n".format(tmp[-1]);
+            tmp = np.load(data["training"]["outputs"]["log_train_loss_history_relative"], allow_pickle=True);
+            wr += "Train loss - {}\n".format(tmp[-1]);
+            tmp = np.load(data["training"]["outputs"]["log_val_loss_history_relative"], allow_pickle=True);
+            wr += "Val losss - {}\n".format(tmp[-1]);
+        wr += "Training Incomplete";
 
         return wr;
 
