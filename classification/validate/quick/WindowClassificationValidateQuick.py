@@ -160,12 +160,12 @@ class WindowClassificationValidateQuick(QtWidgets.QWidget):
         options |= QFileDialog.DontUseNativeDialog
         folderName = QFileDialog.getExistingDirectory(self,"QFileDialog.getExistingDirectory()", os.getcwd())
         if self.system["evaluate"]["structuretype"] == "foldered":
-            self.isf_b2.setText("Selected");
-            self.isf_tb2.setText(folderName);
+            self.isf_b1.setText("Selected");
+            self.isf_tb1.setText(folderName);
             self.system["evaluate"]["dir"] = folderName;
         else:
-            self.isc_b2.setText("Selected");
-            self.isc_tb2.setText(folderName);
+            self.isc_b1.setText("Selected");
+            self.isc_tb1.setText(folderName);
             self.system["evaluate"]["cdir"] = folderName;
 
         with open('base_classification.json', 'w') as outfile:

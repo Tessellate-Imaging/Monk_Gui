@@ -210,7 +210,7 @@ class WindowClassificationInferQuick(QtWidgets.QWidget):
         pixmap = pixmap.scaledToWidth(400)
         pixmap = pixmap.scaledToHeight(300)
         self.l6.setPixmap(pixmap)
-        if(self.index == len(self.img_list)):
+        if(self.index == len(self.img_list) - 1):
             self.b6.setEnabled(False);
 
 
