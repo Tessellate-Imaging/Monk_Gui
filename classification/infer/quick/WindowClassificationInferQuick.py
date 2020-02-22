@@ -355,7 +355,6 @@ class WindowClassificationInferQuick(QtWidgets.QWidget):
         folderName = QFileDialog.getExistingDirectory(self,"QFileDialog.getExistingDirectory()", os.getcwd())
         self.system["img_folder"] = folderName;
         self.tb4.setText(folderName);
-        self.img_list = sorted(os.listdir(folderName))
         with open('base_classification.json', 'w') as outfile:
             json.dump(self.system, outfile)
 
@@ -382,7 +381,7 @@ class WindowClassificationInferQuick(QtWidgets.QWidget):
     
 
     def predict(self):
-        self.img_list = sorted(os.listdir(self.system["img_folder"]))
+        self.img_list = os.listdir(self.system["img_folder"])
         for i in range(len(self.img_list)):
             self.img_list[i] = self.system["img_folder"] + "/" + self.img_list[i];
         self.te1.setText("");
