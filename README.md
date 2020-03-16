@@ -52,6 +52,15 @@ A Graphical user Interface for deep learning and computer vision over Monk Libra
 ` python gui.py`
 
 
+# Walk Throughs
+
+  - Classification Demo 1: [Link](https://1drv.ms/v/s!ArxzFug4NJMtkFg-UovAkOc-wesz?e=UOPbEg)
+
+  - Classification Demo 2: [Link](https://1drv.ms/v/s!ArxzFug4NJMtknlYPTNNdmcEu0Wu?e=xiSndJ)
+
+  - Object Detection Demo: [Link](https://1drv.ms/v/s!ArxzFug4NJMtkFkgM6R5mlfRBCur?e=mo48y8)
+
+
 ## Author
 Tessellate Imaging - https://www.tessellateimaging.com/
    
