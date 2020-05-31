@@ -7,21 +7,20 @@ from PyQt5.QtGui import *
 
 
 
-class WindowClassificationTrainQuickModelParam(QtWidgets.QWidget):
+class WindowClassificationTrainUpdateModelParam(QtWidgets.QWidget):
 
-    forward_train = QtCore.pyqtSignal();
-    forward_update_data_param = QtCore.pyqtSignal();
-    backward_data_param = QtCore.pyqtSignal();
+    forward_layer_param = QtCore.pyqtSignal();
+    backward_transform_param = QtCore.pyqtSignal();
 
 
     def __init__(self):
         super().__init__()
         self.cfg_setup()
-        self.title = 'Experiment {} - Model Params'.format(self.system["experiment"])
+        self.title = 'Experiment {} - Update Model Params'.format(self.system["experiment"])
         self.left = 10
         self.top = 10
-        self.width = 500
-        self.height = 400
+        self.width = 900
+        self.height = 600
         self.initUI()
 
     def cfg_setup(self):
@@ -33,33 +32,25 @@ class WindowClassificationTrainQuickModelParam(QtWidgets.QWidget):
         self.setGeometry(self.left, self.top, self.width, self.height);
 
 
-        
-
-        # forward1
-        self.b1 = QPushButton('Update parameters (advanced)', self)
-        self.b1.move(30, 300)
-        self.b1.clicked.connect(self.forward1)
-
-        # forward2
-        self.b2 = QPushButton('Continue to Training', self)
-        self.b2.move(330, 300)
-        self.b2.clicked.connect(self.forward2)
-
         # Backward
-        self.b3 = QPushButton('Back', self)
-        self.b3.move(300, 350)
-        self.b3.clicked.connect(self.backward)
+        self.b1 = QPushButton('Back', self)
+        self.b1.move(600,550)
+        self.b1.clicked.connect(self.backward)
+
+        # Forward
+        self.b2 = QPushButton('Next', self)
+        self.b2.move(700,550)
+        self.b2.clicked.connect(self.forward)
 
         # Quit
-        self.b4 = QPushButton('Quit', self)
-        self.b4.move(400, 350)
-        self.b4.clicked.connect(self.close)
+        self.b3 = QPushButton('Quit', self)
+        self.b3.move(800,550)
+        self.b3.clicked.connect(self.close)
 
 
         self.l1 = QLabel(self);
-        self.l1.setText("1. Select Model:");
+        self.l1.setText("1. Model List:");
         self.l1.move(20, 20);
-
 
         self.cb1 = QComboBox(self);
         self.cb1.move(150, 20);
@@ -72,21 +63,6 @@ class WindowClassificationTrainQuickModelParam(QtWidgets.QWidget):
         self.cb3 = QComboBox(self);
         self.cb3.move(150, 20);
         self.cb3.activated.connect(self.select_model);
-
-
-        self.l2 = QLabel(self);
-        self.l2.setText("2. Freeze base model:");
-        self.l2.move(20, 100);
-
-
-        self.cb4 = QComboBox(self);
-        self.cb4.move(200, 100);
-        self.cb4.activated.connect(self.select_freeze_base);
-        self.freeze_base = ["yes", "no"];
-        self.cb4.addItems(self.freeze_base);
-        index = self.cb4.findText(self.system["freeze_base_model"], QtCore.Qt.MatchFixedString)
-        if index >= 0:
-            self.cb4.setCurrentIndex(index)
 
 
         if(self.system["backend"] == "Mxnet-1.5.1"):
@@ -104,9 +80,6 @@ class WindowClassificationTrainQuickModelParam(QtWidgets.QWidget):
             combined_list_lower = list(map(str.lower, combined_list))
 
             self.cb1.addItems(combined_list_lower);
-            index = self.cb1.findText(self.system["model"], QtCore.Qt.MatchFixedString)
-            if index >= 0:
-                self.cb1.setCurrentIndex(index)
 
             self.cb1.show();
             self.cb2.hide();
@@ -123,9 +96,6 @@ class WindowClassificationTrainQuickModelParam(QtWidgets.QWidget):
             combined_list_lower = list(map(str.lower, combined_list))
 
             self.cb2.addItems(combined_list_lower);
-            index = self.cb2.findText(self.system["model"], QtCore.Qt.MatchFixedString)
-            if index >= 0:
-                self.cb2.setCurrentIndex(index)
 
             self.cb1.hide();
             self.cb2.show();
@@ -141,64 +111,137 @@ class WindowClassificationTrainQuickModelParam(QtWidgets.QWidget):
             combined_list_lower = list(map(str.lower, combined_list))
 
             self.cb3.addItems(combined_list_lower);
-            index = self.cb3.findText(self.system["model"], QtCore.Qt.MatchFixedString)
-            if index >= 0:
-                self.cb3.setCurrentIndex(index)
 
             self.cb1.hide();
             self.cb2.hide();
             self.cb3.show();
 
 
+        self.l4 = QLabel(self);
+        self.l4.setText("2. Use Gpu:");
+        self.l4.move(20, 100);
+
+
+        self.cb4 = QComboBox(self);
+        self.cb4.move(120, 100);
+        self.cb4.activated.connect(self.select_gpu);
+        self.items = ["True", "False"];
+        self.cb4.addItems(self.items);
+        index = self.cb4.findText(self.system["update"]["use_gpu"]["value"], QtCore.Qt.MatchFixedString)
+        if index >= 0:
+            self.cb4.setCurrentIndex(index)
+
+
+        self.l5 = QLabel(self);
+        self.l5.setText("3. Use Pretrained Weights:");
+        self.l5.move(20, 150);
+
+
+        self.cb5 = QComboBox(self);
+        self.cb5.move(210, 150);
+        self.cb5.activated.connect(self.select_pretrained);
+        self.items = ["True", "False"];
+        self.cb5.addItems(self.items);
+        index = self.cb5.findText(self.system["update"]["use_pretrained"]["value"], QtCore.Qt.MatchFixedString)
+        if index >= 0:
+            self.cb5.setCurrentIndex(index)
+
+
+
+        self.l6 = QLabel(self);
+        self.l6.setText("4. Freeze base network:");
+        self.l6.move(20, 200);
+
+
+        self.cb6 = QComboBox(self);
+        self.cb6.move(200, 200);
+        self.cb6.activated.connect(self.select_freeze_base);
+        self.items = ["True", "False"];
+        self.cb6.addItems(self.items);
+        index = self.cb6.findText(self.system["update"]["freeze_base_network"]["value"], QtCore.Qt.MatchFixedString)
+        if index >= 0:
+            self.cb6.setCurrentIndex(index)
+
+
+
+        self.l7 = QLabel(self);
+        self.l7.setText("5. Number of layers to freeze:");
+        self.l7.move(20, 250);
+
+        self.e7 = QLineEdit(self)
+        self.e7.move(240, 250);
+        self.e7.setText(self.system["update"]["freeze_layers"]["value"]);
+
+
+
+
+
+
+
+
+
+
 
     def select_freeze_base(self):
-        self.system["freeze_base_model"] = self.cb4.currentText();
-        with open('base_classification.json', 'w') as outfile:
-            json.dump(self.system, outfile)
+        self.system["update"]["freeze_base_network"]["active"] = True;
+        self.system["update"]["freeze_base_network"]["value"] = self.cb4.currentText();
 
 
+
+    def select_pretrained(self):
+        self.system["update"]["use_pretrained"]["active"] = True;
+        self.system["update"]["use_pretrained"]["value"] = self.cb4.currentText();
+
+
+
+    def select_gpu(self):
+        self.system["update"]["use_gpu"]["active"] = True;
+        self.system["update"]["use_gpu"]["value"] = self.cb3.currentText();
+
+
+        
 
     def select_model(self):
         if(self.system["backend"] == "Mxnet-1.5.1"):
-            self.system["model"] = self.cb1.currentText();
+            self.system["update"]["model_name"]["active"] = True;
+            self.system["update"]["model_name"]["value"] = self.cb1.currentText();
 
         elif(self.system["backend"] == "Pytorch-1.3.1"):
-            self.system["model"] = self.cb2.currentText();            
+            self.system["update"]["model_name"]["active"] = True;
+            self.system["update"]["model_name"]["value"] = self.cb2.currentText();            
 
         elif(self.system["backend"] == "Keras-2.2.5_Tensorflow-1"):
-            self.system["model"] = self.cb3.currentText();
+            self.system["update"]["model_name"]["active"] = True;
+            self.system["update"]["model_name"]["value"] = self.cb3.currentText();
 
         with open('base_classification.json', 'w') as outfile:
             json.dump(self.system, outfile)
-            
 
 
 
-    def forward1(self):
+
+    def forward(self):
+        if(self.e7.text() != "None"):
+            self.system["update"]["freeze_layers"]["active"] = True;
+            self.system["update"]["freeze_layers"]["value"] = self.e7.text();
         with open('base_classification.json', 'w') as outfile:
             json.dump(self.system, outfile)
-        self.forward_update_data_param.emit();
-
-
-    def forward2(self):
-        with open('base_classification.json', 'w') as outfile:
-            json.dump(self.system, outfile)
-        self.forward_train.emit();
+        self.forward_layer_param.emit();
 
 
     def backward(self):
+        if(self.e7.text() != "None"):
+            self.system["update"]["freeze_layers"]["active"] = True;
+            self.system["update"]["freeze_layers"]["value"] = self.e7.text();
         with open('base_classification.json', 'w') as outfile:
             json.dump(self.system, outfile)
-        self.backward_data_param.emit();
+        self.backward_transform_param.emit();
 
 
 
 '''
 app = QApplication(sys.argv)
-screen = WindowClassificationTrainQuickModelParam()
+screen = WindowClassificationTrainUpdateModelParam()
 screen.show()
 sys.exit(app.exec_())
 '''
-
-
-

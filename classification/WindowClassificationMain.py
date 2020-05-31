@@ -65,6 +65,102 @@ class WindowClassificationMain(QtWidgets.QWidget):
             self.system["compare"]["experiments"] = [];
 
 
+            self.system["update"] = {};
+            self.system["update"]["input_size"] = {};
+            self.system["update"]["input_size"]["active"] = False;
+            self.system["update"]["input_size"]["value"] = "224";
+            self.system["update"]["batch_size"] = {};
+            self.system["update"]["batch_size"]["active"] = False;
+            self.system["update"]["batch_size"]["value"] = "4";
+            self.system["update"]["shuffle_data"] = {};
+            self.system["update"]["shuffle_data"]["active"] = False;
+            self.system["update"]["shuffle_data"]["value"] = "True";
+            self.system["update"]["num_processors"] = {};
+            self.system["update"]["num_processors"]["active"] = False;
+            self.system["update"]["num_processors"]["value"] = "3";
+            self.system["update"]["trainval_split"] = {};
+            self.system["update"]["trainval_split"]["active"] = False;
+            self.system["update"]["trainval_split"]["value"] = "0.7";
+
+            self.system["update"]["transforms"] = {};
+            self.system["update"]["transforms"]["active"] = False;
+            self.system["update"]["transforms"]["value"] = [];
+
+            self.system["update"]["model_name"] = {};
+            self.system["update"]["model_name"]["active"] = False;
+            self.system["update"]["model_name"]["value"] = "";
+
+            self.system["update"]["use_gpu"] = {};
+            self.system["update"]["use_gpu"]["active"] = False;
+            self.system["update"]["use_gpu"]["value"] = "True";
+
+            self.system["update"]["use_pretrained"] = {};
+            self.system["update"]["use_pretrained"]["active"] = False;
+            self.system["update"]["use_pretrained"]["value"] = "True";
+
+            self.system["update"]["freeze_base_network"] = {};
+            self.system["update"]["freeze_base_network"]["active"] = False;
+            self.system["update"]["freeze_base_network"]["value"] = "True";
+
+            self.system["update"]["freeze_layers"] = {};
+            self.system["update"]["freeze_layers"]["active"] = False;
+            self.system["update"]["freeze_layers"]["value"] = "10";
+
+            self.system["update"]["layers"] = {};
+            self.system["update"]["layers"]["active"] = False;
+            self.system["update"]["layers"]["value"] = [];
+
+            self.system["update"]["realtime_progress"] = {};
+            self.system["update"]["realtime_progress"]["active"] = False;
+            self.system["update"]["realtime_progress"]["value"] = "True";
+
+            self.system["update"]["progress"] = {};
+            self.system["update"]["progress"]["active"] = False;
+            self.system["update"]["progress"]["value"] = "True";
+
+            self.system["update"]["save_intermediate"] = {};
+            self.system["update"]["save_intermediate"]["active"] = False;
+            self.system["update"]["save_intermediate"]["value"] = "True";
+
+            self.system["update"]["save_logs"] = {};
+            self.system["update"]["save_logs"]["active"] = False;
+            self.system["update"]["save_logs"]["value"] = "True";
+
+            self.system["update"]["optimizers"] = {};
+            self.system["update"]["optimizers"]["active"] = False;
+            self.system["update"]["optimizers"]["value"] = "";
+
+            self.system["update"]["schedulers"] = {};
+            self.system["update"]["schedulers"]["active"] = False;
+            self.system["update"]["schedulers"]["value"] = "";
+
+            self.system["update"]["losses"] = {};
+            self.system["update"]["losses"]["active"] = False;
+            self.system["update"]["losses"]["value"] = "";
+
+
+
+
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             with open('base_classification.json', 'w') as outfile:
                 json.dump(self.system, outfile)
 

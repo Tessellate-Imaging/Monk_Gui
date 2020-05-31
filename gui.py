@@ -81,9 +81,22 @@ from classification.training.quick.WindowClassificationTrainQuickDataParam impor
 from classification.training.quick.WindowClassificationTrainQuickModelParam import WindowClassificationTrainQuickModelParam
 from classification.training.quick.WindowClassificationTrainQuickTrain import WindowClassificationTrainQuickTrain
 
+from classification.training.update.WindowClassificationTrainUpdateDataParam import WindowClassificationTrainUpdateDataParam
+from classification.training.update.WindowClassificationTrainUpdateTransformParam import WindowClassificationTrainUpdateTransformParam
+from classification.training.update.WindowClassificationTrainUpdateModelParam import WindowClassificationTrainUpdateModelParam
+from classification.training.update.WindowClassificationTrainUpdateLayerParam import WindowClassificationTrainUpdateLayerParam
+from classification.training.update.WindowClassificationTrainUpdateTrainParam import WindowClassificationTrainUpdateTrainParam
+from classification.training.update.WindowClassificationTrainUpdateOptimizerParam import WindowClassificationTrainUpdateOptimizerParam
+from classification.training.update.WindowClassificationTrainUpdateSchedulerParam import WindowClassificationTrainUpdateSchedulerParam
+from classification.training.update.WindowClassificationTrainUpdateLossParam import WindowClassificationTrainUpdateLossParam
+from classification.training.update.WindowClassificationTrainUpdateTrain import WindowClassificationTrainUpdateTrain
+
 from classification.infer.quick.WindowClassificationInferQuick import WindowClassificationInferQuick
+from classification.infer.update.WindowClassificationInferUpdate import WindowClassificationInferUpdate
+
 
 from classification.validate.quick.WindowClassificationValidateQuick import WindowClassificationValidateQuick
+from classification.validate.update.WindowClassificationValidateUpdate import WindowClassificationValidateUpdate
 
 from classification.comparison.WindowClassificationComparisonCurrent import WindowClassificationComparisonCurrent
 
@@ -1143,8 +1156,11 @@ class Controller:
     def show_cls_quick_train_model_param(self):
         self.cls_quick_train_model_param = WindowClassificationTrainQuickModelParam();
 
-        #forward
+        #forward1
         self.cls_quick_train_model_param.forward_train.connect(self.show_cls_quick_train)
+
+        #forward2
+        self.cls_quick_train_model_param.forward_update_data_param.connect(self.show_cls_update_train_data_param)
 
         #backward
         self.cls_quick_train_model_param.backward_data_param.connect(self.show_cls_quick_train_data_param);
@@ -1172,6 +1188,150 @@ class Controller:
         self.cls_quick_train.show();
 
 
+    def show_cls_update_train_data_param(self):
+        self.cls_update_train_data_param = WindowClassificationTrainUpdateDataParam();
+
+        #forward
+        self.cls_update_train_data_param.forward_transform_param.connect(self.show_cls_update_train_transform_param)
+
+        #backward
+        self.cls_update_train_data_param.backward_model_param.connect(self.show_cls_quick_train_model_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_data_param);
+
+        #show_current_window
+        self.cls_update_train_data_param.show();
+
+
+    def show_cls_update_train_transform_param(self):
+        self.cls_update_train_transform_param = WindowClassificationTrainUpdateTransformParam();
+
+        #forward
+        self.cls_update_train_transform_param.forward_model_param.connect(self.show_cls_update_train_model_param)
+
+        #backward
+        self.cls_update_train_transform_param.backward_data_param.connect(self.show_cls_update_train_data_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_transform_param);
+
+        #show_current_window
+        self.cls_update_train_transform_param.show();
+
+
+    def show_cls_update_train_model_param(self):
+        self.cls_update_train_model_param = WindowClassificationTrainUpdateModelParam();
+
+        #forward
+        self.cls_update_train_model_param.forward_layer_param.connect(self.show_cls_update_train_layer_param)
+
+        #backward
+        self.cls_update_train_model_param.backward_transform_param.connect(self.show_cls_update_train_transform_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_model_param);
+
+        #show_current_window
+        self.cls_update_train_model_param.show();
+
+
+    def show_cls_update_train_layer_param(self):
+        self.cls_update_train_layer_param = WindowClassificationTrainUpdateLayerParam();
+
+        #forward
+        self.cls_update_train_layer_param.forward_train_param.connect(self.show_cls_update_train_train_param)
+
+        #backward
+        self.cls_update_train_layer_param.backward_model_param.connect(self.show_cls_update_train_model_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_layer_param);
+
+        #show_current_window
+        self.cls_update_train_layer_param.show();
+
+
+    def show_cls_update_train_train_param(self):
+        self.cls_update_train_train_param = WindowClassificationTrainUpdateTrainParam();
+
+        #forward
+        self.cls_update_train_train_param.forward_optimizer_param.connect(self.show_cls_update_train_optimizer_param)
+
+        #backward
+        self.cls_update_train_train_param.backward_layer_param.connect(self.show_cls_update_train_layer_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_train_param);
+
+        #show_current_window
+        self.cls_update_train_train_param.show();
+
+
+    def show_cls_update_train_optimizer_param(self):
+        self.cls_update_train_optimizer_param = WindowClassificationTrainUpdateOptimizerParam();
+
+        #forward
+        self.cls_update_train_optimizer_param.forward_scheduler_param.connect(self.show_cls_update_train_scheduler_param)
+
+        #backward
+        self.cls_update_train_optimizer_param.backward_train_param.connect(self.show_cls_update_train_train_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_optimizer_param);
+
+        #show_current_window
+        self.cls_update_train_optimizer_param.show();
+
+
+    def show_cls_update_train_scheduler_param(self):
+        self.cls_update_train_scheduler_param = WindowClassificationTrainUpdateSchedulerParam();
+
+        #forward
+        self.cls_update_train_scheduler_param.forward_loss_param.connect(self.show_cls_update_train_loss_param)
+
+        #backward
+        self.cls_update_train_scheduler_param.backward_optimizer_param.connect(self.show_cls_update_train_train_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_scheduler_param);
+
+        #show_current_window
+        self.cls_update_train_scheduler_param.show();
+
+
+    def show_cls_update_train_loss_param(self):
+        self.cls_update_train_loss_param = WindowClassificationTrainUpdateLossParam();
+
+        #forward
+        self.cls_update_train_loss_param.forward_train.connect(self.show_cls_update_train)
+
+        #backward
+        self.cls_update_train_loss_param.backward_scheduler_param.connect(self.show_cls_update_train_scheduler_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_loss_param);
+
+        #show_current_window
+        self.cls_update_train_loss_param.show();
+
+
+    def show_cls_update_train(self):
+        self.cls_update_train = WindowClassificationTrainUpdateTrain();
+
+        #forward
+        self.cls_update_train.forward_infer.connect(self.show_cls_experiment_main)
+
+        #backward
+        self.cls_update_train.backward_loss_param.connect(self.show_cls_update_train_loss_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train);
+
+        #show_current_window
+        self.cls_update_train.show();
+
+
     def show_cls_quick_infer(self):
         self.cls_quick_infer = WindowClassificationInferQuick();
 
@@ -1183,6 +1343,19 @@ class Controller:
 
         #show_current_window
         self.cls_quick_infer.show();
+
+
+    def show_cls_update_infer(self):
+        self.cls_update_infer = WindowClassificationInferUpdate();
+
+        #backward
+        self.cls_update_infer.backward_exp.connect(self.show_cls_experiment_main);
+
+        #close other 
+        self.close_other_windows(self.cls_update_infer);
+
+        #show_current_window
+        self.cls_update_infer.show();
 
 
     def show_cls_quick_validate(self):
@@ -1197,6 +1370,18 @@ class Controller:
         #show_current_window
         self.cls_quick_validate.show();
 
+    def show_cls_update_validate(self):
+        self.cls_update_validate = WindowClassificationValidateUpdate();
+
+        #backward
+        self.cls_update_validate.backward_exp.connect(self.show_cls_experiment_main);
+
+        #close other 
+        self.close_other_windows(self.cls_update_validate);
+
+        #show_current_window
+        self.cls_update_validate.show();
+
 
     def show_cls_comparison_current(self):
         self.cls_comparison_current = WindowClassificationComparisonCurrent();
@@ -1209,7 +1394,6 @@ class Controller:
 
         #show_current_window
         self.cls_comparison_current.show();
-
 
 
 

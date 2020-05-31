@@ -8,7 +8,8 @@ from PyQt5.QtGui import *
 
 class WindowClassificationExperimentRunMode(QtWidgets.QWidget):
 
-    forward_data_param = QtCore.pyqtSignal();
+    forward_data_param = QtCore.pyqtSignal(); #forward to quick_mode
+    forward_expert_data_param = QtCore.pyqtSignal(); #forward to expert_mode
     backward_experiment_main = QtCore.pyqtSignal();
 
 
@@ -48,15 +49,15 @@ class WindowClassificationExperimentRunMode(QtWidgets.QWidget):
         self.b3.clicked.connect(self.close)
 
 
-        self.r1 = QRadioButton("Quick Mode", self)
+        self.r1 = QRadioButton("Quick Mode (Default start + Update params)", self)
         self.r1.move(20, 20)
         self.r1.toggled.connect(self.quick);
 
-        self.r2 = QRadioButton("Update Mode", self)
-        self.r2.move(220, 20)
-        self.r2.toggled.connect(self.update);
+        #self.r2 = QRadioButton("Update Mode", self)
+        #self.r2.move(220, 20)
+        #self.r2.toggled.connect(self.update);
 
-        self.r3 = QRadioButton("Expert Mode", self)
+        self.r3 = QRadioButton("Manually set params", self)
         self.r3.move(420, 20)
         self.r3.toggled.connect(self.expert);
         
@@ -70,9 +71,9 @@ class WindowClassificationExperimentRunMode(QtWidgets.QWidget):
         if self.system["mode"] == "quick":
             self.r1.setChecked(True)
             self.quick();
-        elif self.system["mode"] == "update":
-            self.r2.setChecked(True)
-            self.update();
+        #elif self.system["mode"] == "update":
+        #    self.r2.setChecked(True)
+        #    self.update();
         elif self.system["mode"] == "expert":
             self.r3.setChecked(True)
             self.expert();
@@ -81,7 +82,7 @@ class WindowClassificationExperimentRunMode(QtWidgets.QWidget):
 
     def quick(self):
         wr = "";
-        wr += "Information\n";
+        wr += "Information on default setup\n";
         wr += "1. Desgined with default values of hyper-parameters\n";
         wr += "2. Only few modifiable parameters.\n\n";
         wr += "Use Case\n";
@@ -95,16 +96,48 @@ class WindowClassificationExperimentRunMode(QtWidgets.QWidget):
         wr += "Overview steps\n";
         wr += "1. Default(dataset_path=\"train\", model_name=\"resnet18_v1\", num_epochs=2)\n"
         wr += "2. Train();\n"
+
+        wr += "\n\n";
+        wr += "Information on updating parameters\n";
+        wr += "1. Desgined with default, yet updatable values of hyper-parameters\n\n";
+        wr += "Use Case\n";
+        wr += "1. Quick prototyping and debugging parameters\n"
+        wr += "2. Transfer learning or build custom CNNs \n"
+        wr += "3. For understanding role of hyper-parameters in deep learning\n\n";
+        wr += "Modifiable Elements\n";
+        wr += "1. Dataset\n";
+        wr += "2. Dataset params - \n";
+        wr += "    - Data input size\n";
+        wr += "    - Batch size\n";
+        wr += "    - Data shuffling\n";
+        wr += "    - Num CPU processors\n";
+        wr += "    - Train-Val Split\n";
+        wr += "3. Data Transformations\n";
+        wr += "4. Transfer learning base model or build custom CNNs\n";
+        wr += "5. Model params\n";
+        wr += "    - Use Gpu/Cpu\n";
+        wr += "    - Use pretrained weights or not\n";
+        wr += "    - Freeze Base network or not\n";
+        wr += "    - Freeze certain layers in network\n";
+        wr += "6. Append layers to transfer learning model\n";
+        wr += "7. Loss functions\n";
+        wr += "8. Optimizers\n";
+        wr += "9. Schedulers\n";
+        wr += "10. Epochs\n\n"
+
+
         self.tb1.setText(wr);
 
         self.system["mode"] = "quick";
         with open('base_classification.json', 'w') as outfile:
             json.dump(self.system, outfile)
 
+
+
+    '''
     def update(self):
         wr = "";
-        wr += "In Development\n\n\n";
-        wr += "Information\n";
+        wr += "Information on updating parameters\n";
         wr += "1. Desgined with default, yet updatable values of hyper-parameters\n\n";
         wr += "Use Case\n";
         wr += "1. Quick prototyping and debugging parameters\n"
@@ -136,7 +169,7 @@ class WindowClassificationExperimentRunMode(QtWidgets.QWidget):
         self.system["mode"] = "update";
         with open('base_classification.json', 'w') as outfile:
             json.dump(self.system, outfile)
-
+    '''
 
     def expert(self):
         wr = "Development yet to start";
@@ -151,7 +184,10 @@ class WindowClassificationExperimentRunMode(QtWidgets.QWidget):
     def forward(self):
         with open('base_classification.json', 'w') as outfile:
             json.dump(self.system, outfile)
-        self.forward_data_param.emit();
+        if(self.system["mode"] == "quick"):
+            self.forward_data_param.emit();
+        else:
+            self.forward_expert_data_param.emit();
 
 
     def backward(self):
