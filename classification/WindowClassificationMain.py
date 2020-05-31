@@ -139,18 +139,27 @@ class WindowClassificationMain(QtWidgets.QWidget):
             self.system["update"]["losses"]["value"] = "";
 
 
+            self.system["analysis"] = {};
+            self.system["analysis"]["input_size"] = {};
+            self.system["analysis"]["input_size"]["analysis_name"] = "analyse_input_sizes";
+            self.system["analysis"]["input_size"]["list"] = "128, 223, 256, 512";
+            self.system["analysis"]["input_size"]["percent"] = "30";
+            self.system["analysis"]["input_size"]["epochs"] = "10";
+            self.system["analysis"]["input_size"]["analysis"] = "";
 
+            self.system["analysis"]["batch_size"] = {};
+            self.system["analysis"]["batch_size"]["analysis_name"] = "analyse_batch_sizes";
+            self.system["analysis"]["batch_size"]["list"] = "4, 8, 16, 32";
+            self.system["analysis"]["batch_size"]["percent"] = "30";
+            self.system["analysis"]["batch_size"]["epochs"] = "10";
+            self.system["analysis"]["batch_size"]["analysis"] = "";
 
-
-
-            
-
-
-
-
-
-
-
+            self.system["analysis"]["trainval_split"] = {};
+            self.system["analysis"]["trainval_split"]["analysis_name"] = "analyse_trainval_split";
+            self.system["analysis"]["trainval_split"]["list"] = "0.3, 0.6, 0.9";
+            self.system["analysis"]["trainval_split"]["percent"] = "30";
+            self.system["analysis"]["trainval_split"]["epochs"] = "10";
+            self.system["analysis"]["trainval_split"]["analysis"] = "";
 
 
 

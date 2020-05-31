@@ -91,6 +91,13 @@ from classification.training.update.WindowClassificationTrainUpdateSchedulerPara
 from classification.training.update.WindowClassificationTrainUpdateLossParam import WindowClassificationTrainUpdateLossParam
 from classification.training.update.WindowClassificationTrainUpdateTrain import WindowClassificationTrainUpdateTrain
 
+from classification.training.update.WindowClassificationTrainUpdateAnalysisInputSize import WindowClassificationTrainUpdateAnalysisInputSize
+from classification.training.update.WindowClassificationTrainUpdateAnalysisInputSizeVisualize import WindowClassificationTrainUpdateAnalysisInputSizeVisualize
+from classification.training.update.WindowClassificationTrainUpdateAnalysisBatchSize import WindowClassificationTrainUpdateAnalysisBatchSize
+from classification.training.update.WindowClassificationTrainUpdateAnalysisBatchSizeVisualize import WindowClassificationTrainUpdateAnalysisBatchSizeVisualize
+from classification.training.update.WindowClassificationTrainUpdateAnalysisTrainvalSplit import WindowClassificationTrainUpdateAnalysisTrainvalSplit
+from classification.training.update.WindowClassificationTrainUpdateAnalysisTrainvalSplitVisualize import WindowClassificationTrainUpdateAnalysisTrainvalSplitVisualize
+
 from classification.infer.quick.WindowClassificationInferQuick import WindowClassificationInferQuick
 from classification.infer.update.WindowClassificationInferUpdate import WindowClassificationInferUpdate
 
@@ -1193,6 +1200,10 @@ class Controller:
 
         #forward
         self.cls_update_train_data_param.forward_transform_param.connect(self.show_cls_update_train_transform_param)
+        self.cls_update_train_data_param.forward_analyse_input_size.connect(self.show_cls_update_train_analyse_input_size)
+        self.cls_update_train_data_param.forward_analyse_batch_size.connect(self.show_cls_update_train_analyse_batch_size)
+        self.cls_update_train_data_param.forward_analyse_trainval_split.connect(self.show_cls_update_train_analyse_trainval_split)
+
 
         #backward
         self.cls_update_train_data_param.backward_model_param.connect(self.show_cls_quick_train_model_param);
@@ -1202,6 +1213,112 @@ class Controller:
 
         #show_current_window
         self.cls_update_train_data_param.show();
+
+    
+
+    def show_cls_update_train_analyse_input_size(self):
+        self.cls_update_train_analyse_input_size = WindowClassificationTrainUpdateAnalysisInputSize();
+
+        #forward
+        self.cls_update_train_analyse_input_size.forward_visualize.connect(self.show_cls_update_train_analyse_input_size_visualize);
+
+        #backward
+        self.cls_update_train_analyse_input_size.backward_data_param.connect(self.show_cls_update_train_data_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_analyse_input_size);
+
+        #show_current_window
+        self.cls_update_train_analyse_input_size.show();
+
+
+    def show_cls_update_train_analyse_input_size_visualize(self):
+        self.cls_update_train_analyse_input_size_visualize = WindowClassificationTrainUpdateAnalysisInputSizeVisualize();
+
+        #forward
+        #none
+
+        #backward1
+        self.cls_update_train_analyse_input_size_visualize.backward_analyse.connect(self.show_cls_update_train_analyse_input_size);
+
+        #backward2
+        self.cls_update_train_analyse_input_size_visualize.backward_data_param.connect(self.show_cls_update_train_data_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_analyse_input_size_visualize);
+
+        #show_current_window
+        self.cls_update_train_analyse_input_size_visualize.show();
+
+
+    def show_cls_update_train_analyse_batch_size(self):
+        self.cls_update_train_analyse_batch_size = WindowClassificationTrainUpdateAnalysisBatchSize();
+
+        #forward
+        self.cls_update_train_analyse_batch_size.forward_visualize.connect(self.show_cls_update_train_analyse_batch_size_visualize);
+
+        #backward
+        self.cls_update_train_analyse_batch_size.backward_data_param.connect(self.show_cls_update_train_data_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_analyse_batch_size);
+
+        #show_current_window
+        self.cls_update_train_analyse_batch_size.show();
+
+
+    def show_cls_update_train_analyse_batch_size_visualize(self):
+        self.cls_update_train_analyse_batch_size_visualize = WindowClassificationTrainUpdateAnalysisBatchSizeVisualize();
+
+        #forward
+        #none
+
+        #backward1
+        self.cls_update_train_analyse_batch_size_visualize.backward_analyse.connect(self.show_cls_update_train_analyse_batch_size);
+
+        #backward2
+        self.cls_update_train_analyse_batch_size_visualize.backward_data_param.connect(self.show_cls_update_train_data_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_analyse_batch_size_visualize);
+
+        #show_current_window
+        self.cls_update_train_analyse_batch_size_visualize.show();
+
+
+    def show_cls_update_train_analyse_trainval_split(self):
+        self.cls_update_train_analyse_trainval_split = WindowClassificationTrainUpdateAnalysisTrainvalSplit();
+
+        #forward
+        self.cls_update_train_analyse_trainval_split.forward_visualize.connect(self.show_cls_update_train_analyse_trainval_split_visualize);
+
+        #backward
+        self.cls_update_train_analyse_trainval_split.backward_data_param.connect(self.show_cls_update_train_data_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_analyse_trainval_split);
+
+        #show_current_window
+        self.cls_update_train_analyse_trainval_split.show();
+
+
+    def show_cls_update_train_analyse_trainval_split_visualize(self):
+        self.cls_update_train_analyse_trainval_split_visualize = WindowClassificationTrainUpdateAnalysisTrainvalSplitVisualize();
+
+        #forward
+        #none
+
+        #backward1
+        self.cls_update_train_analyse_trainval_split_visualize.backward_analyse.connect(self.show_cls_update_train_analyse_trainval_split);
+
+        #backward2
+        self.cls_update_train_analyse_trainval_split_visualize.backward_data_param.connect(self.show_cls_update_train_data_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_analyse_trainval_split_visualize);
+
+        #show_current_window
+        self.cls_update_train_analyse_trainval_split_visualize.show();
 
 
     def show_cls_update_train_transform_param(self):

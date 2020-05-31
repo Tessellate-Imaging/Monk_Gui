@@ -10,6 +10,9 @@ from PyQt5.QtGui import *
 class WindowClassificationTrainUpdateDataParam(QtWidgets.QWidget):
 
     forward_transform_param = QtCore.pyqtSignal();
+    forward_analyse_input_size = QtCore.pyqtSignal();
+    forward_analyse_batch_size = QtCore.pyqtSignal();
+    forward_analyse_trainval_split = QtCore.pyqtSignal();
     backward_model_param = QtCore.pyqtSignal();
 
 
@@ -56,6 +59,10 @@ class WindowClassificationTrainUpdateDataParam(QtWidgets.QWidget):
         self.e1.move(170, 20);
         self.e1.setText(self.system["update"]["input_size"]["value"]);
 
+        self.btn1 = QPushButton('Autotune this hyperparam', self)
+        self.btn1.move(350, 20)
+        self.btn1.clicked.connect(self.analyse_input_size)
+
 
 
         self.l2 = QLabel(self);
@@ -65,6 +72,10 @@ class WindowClassificationTrainUpdateDataParam(QtWidgets.QWidget):
         self.e2 = QLineEdit(self)
         self.e2.move(120, 70);
         self.e2.setText(self.system["update"]["batch_size"]["value"]);
+
+        self.btn2 = QPushButton('Autotune this hyperparam', self)
+        self.btn2.move(300, 70)
+        self.btn2.clicked.connect(self.analyse_batch_size)
 
 
         self.l3 = QLabel(self);
@@ -99,10 +110,11 @@ class WindowClassificationTrainUpdateDataParam(QtWidgets.QWidget):
         self.e5.move(230, 220);
         self.e5.setText(self.system["update"]["trainval_split"]["value"]);
 
+        self.btn5 = QPushButton('Autotune this hyperparam', self)
+        self.btn5.move(400, 220)
+        self.btn5.clicked.connect(self.analyse_trainval_split)
 
 
-
-        
 
     
 
@@ -155,6 +167,72 @@ class WindowClassificationTrainUpdateDataParam(QtWidgets.QWidget):
         with open('base_classification.json', 'w') as outfile:
             json.dump(self.system, outfile)
         self.backward_model_param.emit();
+
+
+    def analyse_input_size(self):
+        if(str(self.e1.text()) != "224"):
+            self.system["update"]["input_size"]["active"] = True;
+            self.system["update"]["input_size"]["value"] = str(self.e1.text());
+        if(str(self.e2.text()) != "4"):
+            self.system["update"]["batch_size"]["active"] = True;
+            self.system["update"]["batch_size"]["value"] = str(self.e2.text());
+        if(self.cb3.currentText() != "True"):
+            self.system["update"]["shuffle_data"]["active"] = True;
+            self.system["update"]["shuffle_data"]["value"] = self.cb3.currentText();
+        if(str(self.e4.text()) != "3"):
+            self.system["update"]["num_processors"]["active"] = True;
+            self.system["update"]["num_processors"]["value"] = str(self.e4.text());
+        if(str(self.e5.text()) != "0.7"):
+            self.system["update"]["trainval_split"]["active"] = True;
+            self.system["update"]["trainval_split"]["value"] = str(self.e5.text());
+        
+        with open('base_classification.json', 'w') as outfile:
+            json.dump(self.system, outfile)
+        self.forward_analyse_input_size.emit();
+
+
+    def analyse_batch_size(self):
+        if(str(self.e1.text()) != "224"):
+            self.system["update"]["input_size"]["active"] = True;
+            self.system["update"]["input_size"]["value"] = str(self.e1.text());
+        if(str(self.e2.text()) != "4"):
+            self.system["update"]["batch_size"]["active"] = True;
+            self.system["update"]["batch_size"]["value"] = str(self.e2.text());
+        if(self.cb3.currentText() != "True"):
+            self.system["update"]["shuffle_data"]["active"] = True;
+            self.system["update"]["shuffle_data"]["value"] = self.cb3.currentText();
+        if(str(self.e4.text()) != "3"):
+            self.system["update"]["num_processors"]["active"] = True;
+            self.system["update"]["num_processors"]["value"] = str(self.e4.text());
+        if(str(self.e5.text()) != "0.7"):
+            self.system["update"]["trainval_split"]["active"] = True;
+            self.system["update"]["trainval_split"]["value"] = str(self.e5.text());
+        
+        with open('base_classification.json', 'w') as outfile:
+            json.dump(self.system, outfile)
+        self.forward_analyse_batch_size.emit();
+
+
+    def analyse_trainval_split(self):
+        if(str(self.e1.text()) != "224"):
+            self.system["update"]["input_size"]["active"] = True;
+            self.system["update"]["input_size"]["value"] = str(self.e1.text());
+        if(str(self.e2.text()) != "4"):
+            self.system["update"]["batch_size"]["active"] = True;
+            self.system["update"]["batch_size"]["value"] = str(self.e2.text());
+        if(self.cb3.currentText() != "True"):
+            self.system["update"]["shuffle_data"]["active"] = True;
+            self.system["update"]["shuffle_data"]["value"] = self.cb3.currentText();
+        if(str(self.e4.text()) != "3"):
+            self.system["update"]["num_processors"]["active"] = True;
+            self.system["update"]["num_processors"]["value"] = str(self.e4.text());
+        if(str(self.e5.text()) != "0.7"):
+            self.system["update"]["trainval_split"]["active"] = True;
+            self.system["update"]["trainval_split"]["value"] = str(self.e5.text());
+        
+        with open('base_classification.json', 'w') as outfile:
+            json.dump(self.system, outfile)
+        self.forward_analyse_trainval_split.emit();
 
 
 
