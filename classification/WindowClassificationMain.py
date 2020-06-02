@@ -215,6 +215,7 @@ class WindowClassificationMain(QtWidgets.QWidget):
 
 
 
+
             with open('base_classification.json', 'w') as outfile:
                 json.dump(self.system, outfile)
 

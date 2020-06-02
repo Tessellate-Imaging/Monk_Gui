@@ -134,45 +134,27 @@ class WindowClassificationExperimentRunMode(QtWidgets.QWidget):
 
 
 
-    '''
-    def update(self):
-        wr = "";
-        wr += "Information on updating parameters\n";
-        wr += "1. Desgined with default, yet updatable values of hyper-parameters\n\n";
-        wr += "Use Case\n";
-        wr += "1. Quick prototyping and debugging parameters\n"
-        wr += "2. Transfer learning or build custom CNNs \n"
-        wr += "3. For understanding role of hyper-parameters in deep learning\n\n";
-        wr += "Modifiable Elements\n";
-        wr += "1. Dataset\n";
-        wr += "2. Dataset params - \n";
-        wr += "    - Data input size\n";
-        wr += "    - Batch size\n";
-        wr += "    - Data shuffling\n";
-        wr += "    - Num CPU processors\n";
-        wr += "    - Train-Val Split\n";
-        wr += "3. Data Transformations\n";
-        wr += "4. Transfer learning base model or build custom CNNs\n";
-        wr += "5. Model params\n";
-        wr += "    - Use Gpu/Cpu\n";
-        wr += "    - Use pretrained weights or not\n";
-        wr += "    - Freeze Base network or not\n";
-        wr += "    - Freeze certain layers in network\n";
-        wr += "6. Append layers to transfer learning model\n";
-        wr += "7. Loss functions\n";
-        wr += "8. Optimizers\n";
-        wr += "9. Schedulers\n";
-        wr += "10. Epochs\n\n"
-
-        self.tb1.setText(wr);
-
-        self.system["mode"] = "update";
-        with open('base_classification.json', 'w') as outfile:
-            json.dump(self.system, outfile)
-    '''
+    
 
     def expert(self):
-        wr = "Development yet to start";
+        wr = "";
+        wr += "Feature Inactive.\n";
+        wr += "Use Quick + Update mode. All features available there\n\n\n\n\n";
+        wr += "Information on default setup\n";
+        wr += "1. Desgined for manually setting hyper-parameters\n";
+        wr += "2. Only few modifiable parameters.\n\n";
+        wr += "Use Case\n";
+        wr += "1. Manual setting up of experiment\n"
+        wr += "2. Transfer learning\n"
+        wr += "Overview steps\n";
+        wr += "1. Set dataset\n";
+        wr += "2. Set dataset params\n";
+        wr += "3. Set base model\n";
+        wr += "4. Append layers to base model\n";
+        wr += "5. Set model params\n";
+        wr += "6. Set optimizer, losses, and schedulers\n";
+        wr += "7. Set training params\n";
+        wr += "8. Train();\n"
         self.tb1.setText(wr);
 
         self.system["mode"] = "expert";
@@ -196,9 +178,8 @@ class WindowClassificationExperimentRunMode(QtWidgets.QWidget):
         self.backward_experiment_main.emit();
 
 
-'''
+
 app = QApplication(sys.argv)
 screen = WindowClassificationExperimentRunMode()
 screen.show()
 sys.exit(app.exec_())
-'''
