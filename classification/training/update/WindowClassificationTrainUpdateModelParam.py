@@ -10,6 +10,10 @@ from PyQt5.QtGui import *
 class WindowClassificationTrainUpdateModelParam(QtWidgets.QWidget):
 
     forward_layer_param = QtCore.pyqtSignal();
+    forward_analyse_model_list = QtCore.pyqtSignal();
+    forward_analyse_use_pretrained = QtCore.pyqtSignal();
+    forward_analyse_freeze_base = QtCore.pyqtSignal();
+    forward_analyse_freeze_layer = QtCore.pyqtSignal();
     backward_transform_param = QtCore.pyqtSignal();
 
 
@@ -116,6 +120,10 @@ class WindowClassificationTrainUpdateModelParam(QtWidgets.QWidget):
             self.cb2.hide();
             self.cb3.show();
 
+        self.btn3 = QPushButton('Autotune this hyperparam', self)
+        self.btn3.move(350, 20)
+        self.btn3.clicked.connect(self.analyse_model_list)
+
 
         self.l4 = QLabel(self);
         self.l4.setText("2. Use Gpu:");
@@ -146,6 +154,10 @@ class WindowClassificationTrainUpdateModelParam(QtWidgets.QWidget):
         if index >= 0:
             self.cb5.setCurrentIndex(index)
 
+        self.btn5 = QPushButton('Autotune this hyperparam', self)
+        self.btn5.move(310, 150)
+        self.btn5.clicked.connect(self.analyse_use_pretrained)
+
 
 
         self.l6 = QLabel(self);
@@ -162,6 +174,10 @@ class WindowClassificationTrainUpdateModelParam(QtWidgets.QWidget):
         if index >= 0:
             self.cb6.setCurrentIndex(index)
 
+        self.btn6 = QPushButton('Autotune this hyperparam', self)
+        self.btn6.move(300, 200)
+        self.btn6.clicked.connect(self.analyse_freeze_base)
+
 
 
         self.l7 = QLabel(self);
@@ -171,6 +187,11 @@ class WindowClassificationTrainUpdateModelParam(QtWidgets.QWidget):
         self.e7 = QLineEdit(self)
         self.e7.move(240, 250);
         self.e7.setText(self.system["update"]["freeze_layers"]["value"]);
+
+
+        self.btn7 = QPushButton('Autotune this hyperparam', self)
+        self.btn7.move(420, 250)
+        self.btn7.clicked.connect(self.analyse_freeze_layer)
 
 
 
@@ -218,6 +239,38 @@ class WindowClassificationTrainUpdateModelParam(QtWidgets.QWidget):
             json.dump(self.system, outfile)
 
 
+    def analyse_model_list(self):
+        if(self.e7.text() != "None"):
+            self.system["update"]["freeze_layers"]["active"] = True;
+            self.system["update"]["freeze_layers"]["value"] = self.e7.text();
+        with open('base_classification.json', 'w') as outfile:
+            json.dump(self.system, outfile)
+        self.forward_analyse_model_list.emit();
+
+
+    def analyse_use_pretrained(self):
+        if(self.e7.text() != "None"):
+            self.system["update"]["freeze_layers"]["active"] = True;
+            self.system["update"]["freeze_layers"]["value"] = self.e7.text();
+        with open('base_classification.json', 'w') as outfile:
+            json.dump(self.system, outfile)
+        self.forward_analyse_use_pretrained.emit();
+
+    def analyse_freeze_base(self):
+        if(self.e7.text() != "None"):
+            self.system["update"]["freeze_layers"]["active"] = True;
+            self.system["update"]["freeze_layers"]["value"] = self.e7.text();
+        with open('base_classification.json', 'w') as outfile:
+            json.dump(self.system, outfile)
+        self.forward_analyse_freeze_base.emit();
+
+    def analyse_freeze_layer(self):
+        if(self.e7.text() != "None"):
+            self.system["update"]["freeze_layers"]["active"] = True;
+            self.system["update"]["freeze_layers"]["value"] = self.e7.text();
+        with open('base_classification.json', 'w') as outfile:
+            json.dump(self.system, outfile)
+        self.forward_analyse_freeze_layer.emit();
 
 
     def forward(self):

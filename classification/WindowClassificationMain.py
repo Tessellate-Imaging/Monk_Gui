@@ -142,7 +142,7 @@ class WindowClassificationMain(QtWidgets.QWidget):
             self.system["analysis"] = {};
             self.system["analysis"]["input_size"] = {};
             self.system["analysis"]["input_size"]["analysis_name"] = "analyse_input_sizes";
-            self.system["analysis"]["input_size"]["list"] = "128, 223, 256, 512";
+            self.system["analysis"]["input_size"]["list"] = "128, 224, 256, 512";
             self.system["analysis"]["input_size"]["percent"] = "30";
             self.system["analysis"]["input_size"]["epochs"] = "10";
             self.system["analysis"]["input_size"]["analysis"] = "";
@@ -160,6 +160,51 @@ class WindowClassificationMain(QtWidgets.QWidget):
             self.system["analysis"]["trainval_split"]["percent"] = "30";
             self.system["analysis"]["trainval_split"]["epochs"] = "10";
             self.system["analysis"]["trainval_split"]["analysis"] = "";
+
+
+            self.system["analysis"]["model_list"] = {};
+            self.system["analysis"]["model_list"]["analysis_name"] = "analyse_model_list";
+            self.system["analysis"]["model_list"]["list"] = "";
+            self.system["analysis"]["model_list"]["percent"] = "30";
+            self.system["analysis"]["model_list"]["epochs"] = "10";
+            self.system["analysis"]["model_list"]["analysis"] = "";
+
+
+            self.system["analysis"]["use_pretrained"] = {};
+            self.system["analysis"]["use_pretrained"]["analysis_name"] = "analyse_use_pretrained";
+            self.system["analysis"]["use_pretrained"]["list"] = "yes, no";
+            self.system["analysis"]["use_pretrained"]["percent"] = "30";
+            self.system["analysis"]["use_pretrained"]["epochs"] = "10";
+            self.system["analysis"]["use_pretrained"]["analysis"] = "";
+
+
+            self.system["analysis"]["freeze_base"] = {};
+            self.system["analysis"]["freeze_base"]["analysis_name"] = "analyse_freeze_base";
+            self.system["analysis"]["freeze_base"]["list"] = "yes, no";
+            self.system["analysis"]["freeze_base"]["percent"] = "30";
+            self.system["analysis"]["freeze_base"]["epochs"] = "10";
+            self.system["analysis"]["freeze_base"]["analysis"] = "";
+
+
+            self.system["analysis"]["freeze_layer"] = {};
+            self.system["analysis"]["freeze_layer"]["analysis_name"] = "analyse_freeze_layers";
+            self.system["analysis"]["freeze_layer"]["list"] = "";
+            self.system["analysis"]["freeze_layer"]["percent"] = "30";
+            self.system["analysis"]["freeze_layer"]["epochs"] = "10";
+            self.system["analysis"]["freeze_layer"]["analysis"] = "";
+
+
+            self.system["analysis"]["optimizer_lr"] = {};
+            self.system["analysis"]["optimizer_lr"]["analysis_name"] = "analyse_optimizer_lr";
+            self.system["analysis"]["optimizer_lr"]["list"] = "optimizer_sgd, 0.001, optimizer_adadelta, 0.001";
+            self.system["analysis"]["optimizer_lr"]["percent"] = "30";
+            self.system["analysis"]["optimizer_lr"]["epochs"] = "10";
+            self.system["analysis"]["optimizer_lr"]["analysis"] = "";
+
+
+
+
+
 
 
 

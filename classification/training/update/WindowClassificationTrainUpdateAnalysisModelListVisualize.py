@@ -8,16 +8,16 @@ from PyQt5.QtGui import *
 
 
 
-class WindowClassificationTrainUpdateAnalysisBatchSizeVisualize(QtWidgets.QWidget):
+class WindowClassificationTrainUpdateAnalysisModelListVisualize(QtWidgets.QWidget):
 
-    backward_data_param = QtCore.pyqtSignal();
+    backward_model_param = QtCore.pyqtSignal();
     backward_analyse = QtCore.pyqtSignal();
 
 
     def __init__(self):
         super().__init__()
         self.cfg_setup()
-        self.title = 'Experiment {} - Visualize Analysis of Batch Size Hyperparam tuning'.format(self.system["experiment"])
+        self.title = 'Experiment {} - Visualize Analysis of Model List Hyperparam tuning'.format(self.system["experiment"])
         self.left = 10
         self.top = 10
         self.width = 900
@@ -28,7 +28,7 @@ class WindowClassificationTrainUpdateAnalysisBatchSizeVisualize(QtWidgets.QWidge
         with open('base_classification.json') as json_file:
             self.system = json.load(json_file)
 
-        self.comparison_name = "Comparison_" + self.system["analysis"]["batch_size"]["analysis_name"]
+        self.comparison_name = "Comparison_" + self.system["analysis"]["model_list"]["analysis_name"]
 
     def initUI(self):
         self.setWindowTitle(self.title)
@@ -41,7 +41,7 @@ class WindowClassificationTrainUpdateAnalysisBatchSizeVisualize(QtWidgets.QWidge
         self.b1.clicked.connect(self.backward1)
 
         # Forward
-        self.b2 = QPushButton('Back to Update data param', self)
+        self.b2 = QPushButton('Back to Update model param', self)
         self.b2.move(550,550)
         self.b2.clicked.connect(self.backward2)
 
@@ -119,7 +119,7 @@ class WindowClassificationTrainUpdateAnalysisBatchSizeVisualize(QtWidgets.QWidge
     def backward2(self):
         with open('base_classification.json', 'w') as outfile:
             json.dump(self.system, outfile)
-        self.backward_data_param.emit();
+        self.backward_model_param.emit();
 
 
     
@@ -128,7 +128,7 @@ class WindowClassificationTrainUpdateAnalysisBatchSizeVisualize(QtWidgets.QWidge
 
 '''
 app = QApplication(sys.argv)
-screen = WindowClassificationTrainUpdateAnalysisBatchSizeVisualize()
+screen = WindowClassificationTrainUpdateAnalysisModelListVisualize()
 screen.show()
 sys.exit(app.exec_())
 '''

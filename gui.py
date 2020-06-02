@@ -98,6 +98,17 @@ from classification.training.update.WindowClassificationTrainUpdateAnalysisBatch
 from classification.training.update.WindowClassificationTrainUpdateAnalysisTrainvalSplit import WindowClassificationTrainUpdateAnalysisTrainvalSplit
 from classification.training.update.WindowClassificationTrainUpdateAnalysisTrainvalSplitVisualize import WindowClassificationTrainUpdateAnalysisTrainvalSplitVisualize
 
+from classification.training.update.WindowClassificationTrainUpdateAnalysisModelList import WindowClassificationTrainUpdateAnalysisModelList
+from classification.training.update.WindowClassificationTrainUpdateAnalysisModelListVisualize import WindowClassificationTrainUpdateAnalysisModelListVisualize
+from classification.training.update.WindowClassificationTrainUpdateAnalysisUsePretrained import WindowClassificationTrainUpdateAnalysisUsePretrained
+from classification.training.update.WindowClassificationTrainUpdateAnalysisUsePretrainedVisualize import WindowClassificationTrainUpdateAnalysisUsePretrainedVisualize
+from classification.training.update.WindowClassificationTrainUpdateAnalysisFreezeBase import WindowClassificationTrainUpdateAnalysisFreezeBase
+from classification.training.update.WindowClassificationTrainUpdateAnalysisFreezeBaseVisualize import WindowClassificationTrainUpdateAnalysisFreezeBaseVisualize
+from classification.training.update.WindowClassificationTrainUpdateAnalysisFreezeLayer import WindowClassificationTrainUpdateAnalysisFreezeLayer
+from classification.training.update.WindowClassificationTrainUpdateAnalysisFreezeLayerVisualize import WindowClassificationTrainUpdateAnalysisFreezeLayerVisualize
+from classification.training.update.WindowClassificationTrainUpdateAnalysisOptimizerLr import WindowClassificationTrainUpdateAnalysisOptimizerLr
+from classification.training.update.WindowClassificationTrainUpdateAnalysisOptimizerLrVisualize import WindowClassificationTrainUpdateAnalysisOptimizerLrVisualize
+
 from classification.infer.quick.WindowClassificationInferQuick import WindowClassificationInferQuick
 from classification.infer.update.WindowClassificationInferUpdate import WindowClassificationInferUpdate
 
@@ -1342,6 +1353,11 @@ class Controller:
 
         #forward
         self.cls_update_train_model_param.forward_layer_param.connect(self.show_cls_update_train_layer_param)
+        self.cls_update_train_model_param.forward_analyse_model_list.connect(self.show_cls_update_train_analyse_model_list)
+        self.cls_update_train_model_param.forward_analyse_use_pretrained.connect(self.show_cls_update_train_analyse_use_pretrained)
+        self.cls_update_train_model_param.forward_analyse_freeze_base.connect(self.show_cls_update_train_analyse_freeze_base)
+        self.cls_update_train_model_param.forward_analyse_freeze_layer.connect(self.show_cls_update_train_analyse_freeze_layer)
+
 
         #backward
         self.cls_update_train_model_param.backward_transform_param.connect(self.show_cls_update_train_transform_param);
@@ -1351,6 +1367,140 @@ class Controller:
 
         #show_current_window
         self.cls_update_train_model_param.show();
+
+    def show_cls_update_train_analyse_model_list(self):
+        self.cls_update_train_analyse_model_list = WindowClassificationTrainUpdateAnalysisModelList();
+
+        #forward
+        self.cls_update_train_analyse_model_list.forward_visualize.connect(self.show_cls_update_train_analyse_model_list_visualize);
+
+        #backward
+        self.cls_update_train_analyse_model_list.backward_model_param.connect(self.show_cls_update_train_model_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_analyse_model_list);
+
+        #show_current_window
+        self.cls_update_train_analyse_model_list.show();
+
+    def show_cls_update_train_analyse_model_list_visualize(self):
+        self.cls_update_train_analyse_model_list_visualize = WindowClassificationTrainUpdateAnalysisModelListVisualize();
+
+        #forward
+        #none
+
+        #backward1
+        self.cls_update_train_analyse_model_list_visualize.backward_analyse.connect(self.show_cls_update_train_analyse_model_list);
+
+        #backward2
+        self.cls_update_train_analyse_model_list_visualize.backward_model_param.connect(self.show_cls_update_train_model_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_analyse_model_list_visualize);
+
+        #show_current_window
+        self.cls_update_train_analyse_model_list_visualize.show();
+
+    def show_cls_update_train_analyse_use_pretrained(self):
+        self.cls_update_train_analyse_use_pretrained = WindowClassificationTrainUpdateAnalysisUsePretrained();
+
+        #forward
+        self.cls_update_train_analyse_use_pretrained.forward_visualize.connect(self.show_cls_update_train_analyse_use_pretrained_visualize);
+
+        #backward
+        self.cls_update_train_analyse_use_pretrained.backward_model_param.connect(self.show_cls_update_train_model_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_analyse_use_pretrained);
+
+        #show_current_window
+        self.cls_update_train_analyse_use_pretrained.show();
+
+    def show_cls_update_train_analyse_use_pretrained_visualize(self):
+        self.cls_update_train_analyse_use_pretrained_visualize = WindowClassificationTrainUpdateAnalysisUsePretrainedVisualize();
+
+        #forward
+        #none
+
+        #backward1
+        self.cls_update_train_analyse_use_pretrained_visualize.backward_analyse.connect(self.show_cls_update_train_analyse_use_pretrained);
+
+        #backward2
+        self.cls_update_train_analyse_use_pretrained_visualize.backward_model_param.connect(self.show_cls_update_train_model_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_analyse_use_pretrained_visualize);
+
+        #show_current_window
+        self.cls_update_train_analyse_use_pretrained_visualize.show();
+
+
+    def show_cls_update_train_analyse_freeze_base(self):
+        self.cls_update_train_analyse_freeze_base = WindowClassificationTrainUpdateAnalysisFreezeBase();
+
+        #forward
+        self.cls_update_train_analyse_freeze_base.forward_visualize.connect(self.show_cls_update_train_analyse_freeze_base_visualize);
+
+        #backward
+        self.cls_update_train_analyse_freeze_base.backward_model_param.connect(self.show_cls_update_train_model_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_analyse_freeze_base);
+
+        #show_current_window
+        self.cls_update_train_analyse_freeze_base.show();
+
+    def show_cls_update_train_analyse_freeze_base_visualize(self):
+        self.cls_update_train_analyse_freeze_base_visualize = WindowClassificationTrainUpdateAnalysisFreezeBaseVisualize();
+
+        #forward
+        #none
+
+        #backward1
+        self.cls_update_train_analyse_freeze_base_visualize.backward_analyse.connect(self.show_cls_update_train_analyse_freeze_base);
+
+        #backward2
+        self.cls_update_train_analyse_freeze_base_visualize.backward_model_param.connect(self.show_cls_update_train_model_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_analyse_freeze_base_visualize);
+
+        #show_current_window
+        self.cls_update_train_analyse_freeze_base_visualize.show();
+
+
+    def show_cls_update_train_analyse_freeze_layer(self):
+        self.cls_update_train_analyse_freeze_layer = WindowClassificationTrainUpdateAnalysisFreezeLayer();
+
+        #forward
+        self.cls_update_train_analyse_freeze_layer.forward_visualize.connect(self.show_cls_update_train_analyse_freeze_layer_visualize);
+
+        #backward
+        self.cls_update_train_analyse_freeze_layer.backward_model_param.connect(self.show_cls_update_train_model_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_analyse_freeze_layer);
+
+        #show_current_window
+        self.cls_update_train_analyse_freeze_layer.show();
+
+    def show_cls_update_train_analyse_freeze_layer_visualize(self):
+        self.cls_update_train_analyse_freeze_layer_visualize = WindowClassificationTrainUpdateAnalysisFreezeLayerVisualize();
+
+        #forward
+        #none
+
+        #backward1
+        self.cls_update_train_analyse_freeze_layer_visualize.backward_analyse.connect(self.show_cls_update_train_analyse_freeze_layer);
+
+        #backward2
+        self.cls_update_train_analyse_freeze_layer_visualize.backward_model_param.connect(self.show_cls_update_train_model_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_analyse_freeze_layer_visualize);
+
+        #show_current_window
+        self.cls_update_train_analyse_freeze_layer_visualize.show();
 
 
     def show_cls_update_train_layer_param(self):
@@ -1367,6 +1517,7 @@ class Controller:
 
         #show_current_window
         self.cls_update_train_layer_param.show();
+
 
 
     def show_cls_update_train_train_param(self):
@@ -1390,6 +1541,7 @@ class Controller:
 
         #forward
         self.cls_update_train_optimizer_param.forward_scheduler_param.connect(self.show_cls_update_train_scheduler_param)
+        self.cls_update_train_optimizer_param.forward_analyse_optimizer_lr.connect(self.show_cls_update_train_analyse_optimizer_lr)
 
         #backward
         self.cls_update_train_optimizer_param.backward_train_param.connect(self.show_cls_update_train_train_param);
@@ -1399,6 +1551,39 @@ class Controller:
 
         #show_current_window
         self.cls_update_train_optimizer_param.show();
+
+    def show_cls_update_train_analyse_optimizer_lr(self):
+        self.cls_update_train_analyse_optimizer_lr = WindowClassificationTrainUpdateAnalysisOptimizerLr();
+
+        #forward
+        self.cls_update_train_analyse_optimizer_lr.forward_visualize.connect(self.show_cls_update_train_analyse_optimizer_lr_visualize);
+
+        #backward
+        self.cls_update_train_analyse_optimizer_lr.backward_optimizer_param.connect(self.show_cls_update_train_optimizer_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_analyse_optimizer_lr);
+
+        #show_current_window
+        self.cls_update_train_analyse_optimizer_lr.show();
+
+    def show_cls_update_train_analyse_optimizer_lr_visualize(self):
+        self.cls_update_train_analyse_optimizer_lr_visualize = WindowClassificationTrainUpdateAnalysisOptimizerLrVisualize();
+
+        #forward
+        #none
+
+        #backward1
+        self.cls_update_train_analyse_optimizer_lr_visualize.backward_analyse.connect(self.show_cls_update_train_analyse_optimizer_lr);
+
+        #backward2
+        self.cls_update_train_analyse_optimizer_lr_visualize.backward_optimizer_param.connect(self.show_cls_update_train_optimizer_param);
+
+        #close other 
+        self.close_other_windows(self.cls_update_train_analyse_optimizer_lr_visualize);
+
+        #show_current_window
+        self.cls_update_train_analyse_optimizer_lr_visualize.show();
 
 
     def show_cls_update_train_scheduler_param(self):

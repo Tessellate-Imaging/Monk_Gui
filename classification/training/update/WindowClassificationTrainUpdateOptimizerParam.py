@@ -10,7 +10,9 @@ from PyQt5.QtGui import *
 class WindowClassificationTrainUpdateOptimizerParam(QtWidgets.QWidget):
 
     forward_scheduler_param = QtCore.pyqtSignal();
+    forward_analyse_optimizer_lr = QtCore.pyqtSignal();
     backward_train_param = QtCore.pyqtSignal();
+
 
 
     def __init__(self):
@@ -97,6 +99,9 @@ class WindowClassificationTrainUpdateOptimizerParam(QtWidgets.QWidget):
             self.cb2.hide();
 
 
+        self.btn1 = QPushButton('Autotune this hyperparam', self)
+        self.btn1.move(300, 20)
+        self.btn1.clicked.connect(self.analyse_optimizer_lr);
 
 
 
@@ -1486,39 +1491,6 @@ class WindowClassificationTrainUpdateOptimizerParam(QtWidgets.QWidget):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         self.select_optimizer();
 
         self.tb1 = QTextEdit(self)
@@ -1535,6 +1507,9 @@ class WindowClassificationTrainUpdateOptimizerParam(QtWidgets.QWidget):
         self.b6 = QPushButton('Clear ', self)
         self.b6.move(400,500)
         self.b6.clicked.connect(self.clear_optimizer)
+
+
+
 
 
 
@@ -1819,6 +1794,12 @@ class WindowClassificationTrainUpdateOptimizerParam(QtWidgets.QWidget):
         wr = "";
         self.tb1.setText(wr);
 
+
+
+    def analyse_optimizer_lr(self):
+        with open('base_classification.json', 'w') as outfile:
+            json.dump(self.system, outfile)
+        self.forward_analyse_optimizer_lr.emit();
 
 
     def forward(self):        
