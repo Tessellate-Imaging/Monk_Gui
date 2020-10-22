@@ -37,17 +37,16 @@ else:
 
 
 
-sys.path.append("monk_v1/monk/");
+#sys.path.append("monk_v1/monk/");
 
 if(system["backend"] == "Mxnet-1.5.1"):
-    from gluon_prototype import prototype
+    from monk.gluon_prototype import prototype
 
 elif(system["backend"] == "Pytorch-1.3.1"):
-    from pytorch_prototype import prototype        
+    from monk.pytorch_prototype import prototype        
 
 elif(system["backend"] == "Keras-2.2.5_Tensorflow-1"):
-    from keras_prototype import prototype
-
+    from monk.keras_prototype import prototype
 
 
 

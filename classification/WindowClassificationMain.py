@@ -288,6 +288,7 @@ class WindowClassificationMain(QtWidgets.QWidget):
 
         
         # Forward
+        # Cloning not required with pip based mon installation
         if not os.path.isdir("monk_v1"):
             self.b1.setText("Cloning (Wait)")
             for x in self.wid:
@@ -299,9 +300,12 @@ class WindowClassificationMain(QtWidgets.QWidget):
             self.process.readyReadStandardError.connect(self.stderrReady)
             self.process.finished.connect(self.finished)
 
-            self.process.start('git clone https://github.com/Tessellate-Imaging/monk_v1') 
+            self.process.start('git clone https://github.com/Tessellate-Imaging/monk_v1')
+            #self.process.start("wget --load-cookies /tmp/cookies.txt \"https://docs.google.com/uc?export=download&confirm=$(wget --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1rG-U1mS8hDU7_wM56a1kc-li_zHLtbq2' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1rG-U1mS8hDU7_wM56a1kc-li_zHLtbq2\" -O datasets.zip && rm -rf /tmp/cookies.txt");
+            
         else:
-            self.te1.setText("Monk Classification Library Cloned.");           
+            self.te1.setText("Monk Classification Library Cloned.");
+            self.te1.setText("System State Normal.");        
 
         
 

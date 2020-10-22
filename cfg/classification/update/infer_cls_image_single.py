@@ -28,7 +28,7 @@ with open('base_classification.json') as json_file:
 system["epochs"] = int(system["epochs"]);
 
 
-sys.path.append("monk_v1/monk/");
+#sys.path.append("monk_v1/monk/");
 
 
 with open('workspace/' + system["project"] + '/' + system["experiment"] + '/experiment_state.json') as json_file:
@@ -36,13 +36,13 @@ with open('workspace/' + system["project"] + '/' + system["experiment"] + '/expe
 
 
 if(data["library"] == "Mxnet"):
-    from gluon_prototype import prototype
+    from monk.gluon_prototype import prototype
 
 elif(data["library"] == "Pytorch"):
-    from pytorch_prototype import prototype        
+    from monk.pytorch_prototype import prototype        
 
 elif(data["library"] == "Keras"):
-    from keras_prototype import prototype
+    from monk.keras_prototype import prototype
 
 
 ptf = prototype(verbose=1);

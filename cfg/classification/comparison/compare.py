@@ -23,10 +23,10 @@ with open('base_classification.json') as json_file:
     system = json.load(json_file)
 
 
-sys.path.append("monk_v1/monk/");
+#sys.path.append("monk_v1/monk/");
 
 
-from compare_prototype import compare
+from monk.compare_prototype import compare
 
 ctf = compare(verbose=1);
 ctf.Comparison("Sample_Comparison");
